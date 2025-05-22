@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import bgRegis from './assets/bg-regis.jpg'; 
-import userIcon from './assets/user-icon.png';
-import emailIcon from './assets/email-icon.png';
-import eyeOpenIcon from './assets/eye-open.png';
-import eyeClosedIcon from './assets/eye-close.png';
+import bgRegis from '../assets/bg-regis.jpg'; 
+import userIcon from '../assets/user-icon.png';
+import emailIcon from '../assets/email-icon.png';
+import eyeOpenIcon from '../assets/eye-open.png';
+import eyeClosedIcon from '../assets/eye-close.png';
+import { Link } from 'react-router-dom';
+
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +16,7 @@ export default function SignUp() {
       <div className="w-1/2 bg-black text-white flex flex-col justify-center px-12 py-8">
         <h1 className="text-4xl font-bold mb-6">Sign Up</h1>
         <p className="mb-4 text-sm">
-          Already Have An Account? <a href="#" className="text-blue-400">Sign In</a>
+          Already Have An Account? <Link to="/" className="text-blue-400">Back to Home</Link>
         </p>
 
         {/* Username */}
