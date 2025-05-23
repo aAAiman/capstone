@@ -29,7 +29,7 @@ export default function Navbar() {
 
           {/* Auth */}
           <div className="flex space-x-4 text-xl">
-            <Link to="/#" className="hover:underline">Login</Link>
+            <Link to="/signin" className="hover:underline">Login</Link>
             <Link to="/signup" className="hover:underline">Register</Link>
           </div>
         </div>

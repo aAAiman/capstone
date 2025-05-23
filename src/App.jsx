@@ -4,11 +4,12 @@ import SignUp from './components/SignUp';
 import LandingPage from './components/landing-page';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
+import SignIn from './components/SignIn';
 
 function AppWrapper() {
   const location = useLocation();
 
-  const noNavFooterPaths = ['/signup', '/login'];
+  const noNavFooterPaths = ['/signup', '/signin'];
 
   const hideNavFooter = noNavFooterPaths.includes(location.pathname);
 
@@ -18,6 +19,7 @@ function AppWrapper() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
       </Routes>
       {!hideNavFooter && <Footer />}
     </div>
@@ -31,5 +33,7 @@ function App() {
     </Router>
   );
 }
+
+
 
 export default App;
