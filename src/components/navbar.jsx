@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// components/navbar.jsx
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch, FaBars, FaTimes } from 'react-icons/fa';
+import { AuthContext } from './AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+    setIsOpen(false);
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-black bg-opacity-80 shadow-md font-serif text-white">
@@ -29,8 +39,14 @@ export default function Navbar() {
 
           {/* Auth */}
           <div className="flex space-x-4 text-xl">
-            <Link to="/signin" className="hover:underline">Login</Link>
-            <Link to="/signup" className="hover:underline">Register</Link>
+            {isAuthenticated ? (
+              <button onClick={handleLogout} className="hover:underline">Logout</button>
+            ) : (
+              <>
+                <Link to="/signin" className="hover:underline">Login</Link>
+                <Link to="/signup" className="hover:underline">Register</Link>
+              </>
+            )}
           </div>
         </div>
 
@@ -60,8 +76,14 @@ export default function Navbar() {
           </div>
 
           <div className="flex space-x-6 text-xl">
-            <Link to="/#" onClick={() => setIsOpen(false)} className="hover:underline">Login</Link>
-            <Link to="/signup" onClick={() => setIsOpen(false)} className="hover:underline">Register</Link>
+            {isAuthenticated ? (
+              <button onClick={handleLogout} className="hover:underline">Logout</button>
+            ) : (
+              <>
+                <Link to="/signin" onClick={() => setIsOpen(false)} className="hover:underline">Login</Link>
+                <Link to="/signup" onClick={() => setIsOpen(false)} className="hover:underline">Register</Link>
+              </>
+            )}
           </div>
         </div>
       )}
