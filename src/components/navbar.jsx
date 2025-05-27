@@ -1,4 +1,3 @@
-// components/navbar.jsx
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSearch, FaBars, FaTimes } from 'react-icons/fa';
@@ -6,7 +5,7 @@ import { AuthContext } from './AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated, user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -38,9 +37,12 @@ export default function Navbar() {
           </div>
 
           {/* Auth */}
-          <div className="flex space-x-4 text-xl">
+          <div className="flex space-x-4 text-xl items-center">
             {isAuthenticated ? (
-              <button onClick={handleLogout} className="hover:underline">Logout</button>
+              <>
+                <span className="text-white">Welcome, {user?.name || 'User'}</span>
+                <button onClick={handleLogout} className="hover:underline">Logout</button>
+              </>
             ) : (
               <>
                 <Link to="/signin" className="hover:underline">Login</Link>
@@ -75,9 +77,12 @@ export default function Navbar() {
             <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white" />
           </div>
 
-          <div className="flex space-x-6 text-xl">
+          <div className="flex space-x-6 text-xl items-center">
             {isAuthenticated ? (
-              <button onClick={handleLogout} className="hover:underline">Logout</button>
+              <>
+                <span className="text-white">Welcome, {user?.name || 'User'}</span>
+                <button onClick={handleLogout} className="hover:underline">Logout</button>
+              </>
             ) : (
               <>
                 <Link to="/signin" onClick={() => setIsOpen(false)} className="hover:underline">Login</Link>
