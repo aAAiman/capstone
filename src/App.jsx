@@ -5,6 +5,7 @@ import LandingPage from './components/landing-page';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import SignIn from './components/SignIn';
+import DetailWisata from './components/detail-wisata';
 import { AuthProvider } from './components/AuthContext';
 import setupAxiosInterceptors from './components/axiosConfig';
 import { AuthContext } from './components/AuthContext';
@@ -26,6 +27,7 @@ function AppWrapper() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/detail-wisata/:id" element={<DetailWisata />} />
       </Routes>
       {!hideNavFooter && <Footer />}
     </div>
@@ -41,4 +43,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;
