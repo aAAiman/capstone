@@ -27,7 +27,7 @@ function AppWrapper() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/detail-wisata/:id" element={<DetailWisata />} />
+        <Route path="/places/:id" element={<DetailWisata />} />
       </Routes>
       {!hideNavFooter && <Footer />}
     </div>
