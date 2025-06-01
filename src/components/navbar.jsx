@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-6 text-xl">
           <Link to="/" className="hover:underline">Home</Link>
           <Link to="/#" className="hover:underline">Rekomendasi</Link>
-          <Link to="/#" className="hover:underline">Forum</Link>
+          <Link to="/wishlist" className="hover:underline">Wishlist</Link>
         </div>
 
         {/*  Auth Desktop */}
@@ -56,7 +56,7 @@ export default function Navbar() {
         <div className="md:hidden flex flex-col items-center space-y-4 pb-4 border-t border-white text-lg bg-black bg-opacity-90">
           <Link to="/" onClick={() => setIsOpen(false)} className="hover:underline">Home</Link>
           <Link to="/#" onClick={() => setIsOpen(false)} className="hover:underline">Rekomendasi</Link>
-          <Link to="/#" onClick={() => setIsOpen(false)} className="hover:underline">Forum</Link>
+          <Link to="/wishlist" onClick={() => setIsOpen(false)} className="hover:underline">Wishlist</Link>
 
           <div className="flex space-x-6 text-xl items-center">
             {isAuthenticated ? (

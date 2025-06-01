@@ -9,6 +9,7 @@ import DetailWisata from './components/detail-wisata';
 import { AuthProvider } from './components/AuthContext';
 import setupAxiosInterceptors from './components/axiosConfig';
 import { AuthContext } from './components/AuthContext';
+import Wishlist from './components/wishlist';
 
 function AppWrapper() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function AppWrapper() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/places/:id" element={<DetailWisata />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
       {!hideNavFooter && <Footer />}
     </div>

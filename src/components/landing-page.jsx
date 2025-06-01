@@ -17,7 +17,7 @@ export default function LandingPage() {
         // Ambil 6 data teratas
         setPlaces(response.data.slice(0, 6));
         setLoading(false);
-      } catch (err) {
+      } catch (error) {
         setError('Gagal memuat data tempat wisata');
         setLoading(false);
       }
