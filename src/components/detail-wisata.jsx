@@ -14,15 +14,13 @@ const DetailWisata = () => {
   useEffect(() => {
     const fetchPlace = async () => {
       try {
-        // Ambil data tempat wisata berdasarkan ID
         const response = await axios.get(`http://localhost:5000/places/${id}`);
         setPlace(response.data);
 
-        // Ambil tempat terkait (dari provinsi yang sama, kecuali tempat ini)
         const relatedResponse = await axios.get(`http://localhost:5000/places`, {
           params: { province: response.data.province, notId: id },
         });
-        setRelatedPlaces(relatedResponse.data.slice(0, 3)); // Ambil maksimal 3 tempat terkait
+        setRelatedPlaces(relatedResponse.data.slice(0, 3)); 
         setLoading(false);
       } catch (err) {
         setError('Gagal memuat detail tempat wisata');
@@ -43,7 +41,7 @@ const DetailWisata = () => {
         className="relative h-screen flex items-end justify-start"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url(${
-            place.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop'
+            place.gambar || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop'
           })`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
