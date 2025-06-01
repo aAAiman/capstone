@@ -98,12 +98,7 @@ const DetailWisata = () => {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             {place.name}
           </h1>
-          <div className="flex items-center space-x-4">
-            <button className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-all duration-300 group">
-              <Bookmark className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            </button>
-           
-          </div>
+
         </div>
       </div>
 
@@ -119,12 +114,19 @@ const DetailWisata = () => {
                   <Star className="w-5 h-5 text-yellow-400 fill-current" />
                   <span className="text-lg font-semibold text-yellow-400">{place.rating}</span>
                 </div>
+                <div className="flex items-center space-x-4">
+                  <button className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-all duration-300 group">
+                    <Bookmark className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  </button>
+
+                </div>
                 <div className="flex items-center space-x-2 text-gray-400">
                   <MapPin className="w-5 h-5" />
                   <span className="text-lg">{place.location}</span>
                 </div>
+
               </div>
-              
+
               <div className="prose prose-invert prose-lg max-w-none">
                 <p className="text-gray-300 leading-relaxed text-lg whitespace-pre-line">
                   {place.detailedDescription || place.description}
@@ -139,19 +141,19 @@ const DetailWisata = () => {
                 {place.relatedPlaces.map((related, index) => (
                   <div key={index} className="group cursor-pointer">
                     <div className="relative overflow-hidden rounded-2xl bg-gray-900 shadow-2xl">
-                      <img 
-                        src={related.image} 
-                        alt={related.name} 
-                        className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500" 
+                      <img
+                        src={related.image}
+                        alt={related.name}
+                        className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-                      
+
                       {/* Rating Badge */}
                       <div className="absolute top-4 right-4 flex items-center space-x-1 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
                         <Star className="w-4 h-4 text-yellow-400 fill-current" />
                         <span className="text-sm font-medium text-white">{related.rating}</span>
                       </div>
-                      
+
                       {/* Content */}
                       <div className="absolute bottom-0 left-0 right-0 p-6">
                         <h3 className="text-xl font-bold mb-2">{related.name}</h3>
