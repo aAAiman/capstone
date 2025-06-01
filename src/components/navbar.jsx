@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaSearch, FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { AuthContext } from './AuthContext';
 
 export default function Navbar() {
@@ -24,18 +24,8 @@ export default function Navbar() {
           <Link to="/#" className="hover:underline">Forum</Link>
         </div>
 
-        {/* Kanan: Search + Auth Desktop */}
+        {/*  Auth Desktop */}
         <div className="hidden md:flex items-center space-x-6">
-          {/* Search */}
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="rounded-full border border-white px-4 py-1 text-sm focus:outline-none w-48 bg-transparent text-white"
-            />
-            <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white" />
-          </div>
-
           {/* Auth */}
           <div className="flex space-x-4 text-xl items-center">
             {isAuthenticated ? (
@@ -67,15 +57,6 @@ export default function Navbar() {
           <Link to="/" onClick={() => setIsOpen(false)} className="hover:underline">Home</Link>
           <Link to="/#" onClick={() => setIsOpen(false)} className="hover:underline">Rekomendasi</Link>
           <Link to="/#" onClick={() => setIsOpen(false)} className="hover:underline">Forum</Link>
-
-          <div className="relative w-3/4">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full rounded-full border border-white px-4 py-1 text-sm bg-transparent text-white focus:outline-none"
-            />
-            <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white" />
-          </div>
 
           <div className="flex space-x-6 text-xl items-center">
             {isAuthenticated ? (
