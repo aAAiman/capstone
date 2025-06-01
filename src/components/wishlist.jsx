@@ -70,7 +70,7 @@ export default function Wishlist() {
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={item.image || 'https://source.unsplash.com/300x200/?travel'}
+                    src={item.gambar || 'https://source.unsplash.com/300x200/?travel'}
                     alt={item.name}
                     className="w-full h-full object-cover hover:scale-105 transition duration-300"
                   />

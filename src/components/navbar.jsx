@@ -56,10 +56,10 @@ export default function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link 
-                to="/#" 
+                to="/wishlist" 
                 className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 relative group"
               >
-                Forum
+                wishlist
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </div>
