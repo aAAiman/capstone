@@ -142,12 +142,12 @@ export default function Navbar() {
                   Rekomendasi
                 </Link>
                 <Link 
-                  to="/#" 
-                  onClick={() => setIsOpen(false)}
-                  className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2 border-b border-transparent hover:border-white/20"
-                >
-                  Forum
-                </Link>
+                to="/wishlist" 
+                className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 relative group"
+              >
+                wishlist
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+              </Link>
               </div>
 
               {/* Mobile Divider */}

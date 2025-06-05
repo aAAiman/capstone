@@ -1,8 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Bookmark, BookmarkCheck, Star } from 'lucide-react';
+import { Bookmark, BookmarkCheck, Star, CheckCircle, X } from 'lucide-react';
 import markerIcon from '../assets/marker.png';
+
+// Custom Alert Component
+const CustomAlert = ({ show, onClose, type = 'success', title, message }) => {
+  useEffect(() => {
+    if (show) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [show, onClose]);
+
+  if (!show) return null;
+
+  const alertStyles = {
+    success: {
+      bg: 'bg-gradient-to-r from-green-500 to-emerald-600',
+      icon: <CheckCircle className="w-6 h-6 text-white" />,
+      border: 'border-green-400'
+    },
+    warning: {
+      bg: 'bg-gradient-to-r from-yellow-500 to-orange-600',
+      icon: <Bookmark className="w-6 h-6 text-white" />,
+      border: 'border-yellow-400'
+    }
+  };
+
+  const currentStyle = alertStyles[type] || alertStyles.success;
+
+  return (
+    <div className="fixed top-4 right-4 z-50 transition-all animate-slide-in">
+      <div className={`${currentStyle.bg} ${currentStyle.border} border p-4 rounded-2xl shadow-2xl min-w-80 max-w-md backdrop-blur-sm`}>
+        <div className="flex items-start space-x-3">
+          <div className="mt-0.5">{currentStyle.icon}</div>
+          <div className="flex-1">
+            <p className="text-white font-semibold text-sm">{title}</p>
+            <p className="text-white/90 text-sm mt-1">{message}</p>
+          </div>
+          <button onClick={onClose} className="text-white/70 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        <div className="mt-3 w-full bg-white/20 rounded-full h-1 overflow-hidden">
+          <div className="h-full bg-white rounded-full animate-[shrink_3s_linear_forwards]" />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const DetailWisata = () => {
   const { id } = useParams();
@@ -12,6 +61,16 @@ const DetailWisata = () => {
   const [error, setError] = useState(null);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
+  const [alert, setAlert] = useState({ show: false, type: '', title: '', message: '' });
+
+  const showAlert = (type, title, message) => {
+    setAlert({ show: true, type, title, message });
+  };
+
+  const closeAlert = () => {
+    setAlert((prev) => ({ ...prev, show: false }));
+  };
+
   useEffect(() => {
     const fetchPlace = async () => {
       try {
@@ -19,7 +78,7 @@ const DetailWisata = () => {
         setPlace(response.data);
 
         const relatedResponse = await axios.get(`http://localhost:5000/places`, {
-          params: { province: response.data.province, notId: id },
+          params: { province: response.data.province, notId: id }
         });
         setRelatedPlaces(relatedResponse.data.slice(0, 3));
 
@@ -48,7 +107,7 @@ const DetailWisata = () => {
   const handleBookmark = async () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      alert('Kamu belum login!');
+      showAlert('warning', 'Kamu belum login!');
       return;
     }
 
@@ -58,7 +117,7 @@ const DetailWisata = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setIsBookmarked(false);
-        alert('Tempat dihapus dari wishlist.');
+        showAlert('warning', 'Wishlist Dihapus', 'Tempat wisata berhasil dihapus dari wishlist.');
       } else {
         await axios.post(
           'http://localhost:5000/wishlist',
@@ -68,11 +127,11 @@ const DetailWisata = () => {
           }
         );
         setIsBookmarked(true);
-        alert('Tempat ditambahkan ke wishlist.');
+        showAlert('success', 'Wishlist Ditambahkan', 'Tempat wisata berhasil ditambahkan ke wishlist.');
       }
     } catch (error) {
       console.error('Error response:', error.response?.data);
-      alert(error.response?.data?.message || 'Gagal memproses wishlist.');
+      showAlert('warning', 'Gagal', error.response?.data?.message || 'Gagal memproses wishlist.');
     }
   };
 
@@ -85,13 +144,16 @@ const DetailWisata = () => {
   const encodedGambar = place.gambar ? encodeURI(place.gambar) : 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop';
   return (
     <div className="min-h-screen bg-black text-white">
+      <CustomAlert {...alert} onClose={closeAlert} />
+
+      {/* Header with image */}
       <div
         className="relative h-screen flex items-end justify-start"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url(${encodedGambar})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          backgroundRepeat: 'no-repeat'
         }}
       >
         <div className="px-4 sm:px-8 mb-20 max-w-3xl">
