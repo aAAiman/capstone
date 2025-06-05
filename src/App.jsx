@@ -10,10 +10,14 @@ import { AuthProvider } from './components/AuthContext';
 import setupAxiosInterceptors from './components/axiosConfig';
 import { AuthContext } from './components/AuthContext';
 import Wishlist from './components/wishlist';
+import Recommendation from './components/Recommendation';  
+
 
 function AppWrapper() {
   const location = useLocation();
   const { refreshAccessToken, logout } = useContext(AuthContext);
+
+  // Paths yang tidak ingin menampilkan Navbar dan Footer
   const noNavFooterPaths = ['/signup', '/signin'];
   const hideNavFooter = noNavFooterPaths.includes(location.pathname);
 
@@ -30,6 +34,7 @@ function AppWrapper() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/places/:id" element={<DetailWisata />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/rekomendasi" element={<Recommendation />} />
       </Routes>
       {!hideNavFooter && <Footer />}
     </div>

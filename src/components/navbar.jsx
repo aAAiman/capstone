@@ -49,7 +49,7 @@ export default function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link 
-                to="/#" 
+                to="/rekomendasi" 
                 className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 relative group"
               >
                 Rekomendasi
@@ -91,7 +91,7 @@ export default function Navbar() {
                   </Link>
                   <Link 
                     to="/signup" 
-                    className="border border-white/30 hover:border-white hover:bg-black  text-white px-4 py-2 text-sm font-light tracking-widest uppercase transition-all duration-300"
+                    className="border border-white/30 hover:border-white hover:bg-white hover:text-black px-4 py-2 text-sm font-light tracking-widest uppercase transition-all duration-300"
                   >
                     Register
                   </Link>
@@ -142,12 +142,12 @@ export default function Navbar() {
                   Rekomendasi
                 </Link>
                 <Link 
-                to="/wishlist" 
-                className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 relative group"
-              >
-                wishlist
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
-              </Link>
+                  to="/#" 
+                  onClick={() => setIsOpen(false)}
+                  className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2 border-b border-transparent hover:border-white/20"
+                >
+                  Forum
+                </Link>
               </div>
 
               {/* Mobile Divider */}
