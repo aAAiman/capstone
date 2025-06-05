@@ -38,7 +38,7 @@ export default function Wishlist() {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* Header Section */}
+      {/* Header */}
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-serif mb-4">Wishlist Tempat Wisata</h1>
         <div className="w-32 h-1 bg-white mx-auto"></div>
@@ -61,46 +61,43 @@ export default function Wishlist() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {wishlistItems.map((item) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {wishlistItems.map((item, index) => (
               <div
                 key={item.id}
-                className="bg-black bg-opacity-80 rounded-2xl overflow-hidden border border-gray-600 hover:border-white transition duration-300"
+                className="group bg-black border border-white/10 hover:border-white/30 transition-all duration-700 transform hover:scale-105"
+                style={{ transitionDelay: `${index * 150}ms` }}
               >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative overflow-hidden">
                   <img
                     src={item.gambar || 'https://source.unsplash.com/300x200/?travel'}
                     alt={item.name}
-                    className="w-full h-full object-cover hover:scale-105 transition duration-300"
+                    className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
                   />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
+                  <div className="absolute bottom-0 left-0 w-full h-px bg-white/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 </div>
 
-                {/* Content */}
-                <div className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold text-white">{item.name}</h3>
-                    <StarRating rating={item.rating || 4.5} />
-                  </div>
-
-                  <p className="text-gray-300 text-sm mb-3 leading-relaxed">
-                    {item.description?.length > 100
-                      ? `${item.description.substring(0, 100)}...`
-                      : item.description || 'Deskripsi tidak tersedia'}
+                <div className="p-8">
+                  <h3 className="text-xl font-light mb-4 text-white tracking-wide group-hover:text-gray-300 transition-colors duration-300">
+                    {item.name}
+                  </h3>
+                  <p className="text-sm text-gray-400 mb-6 leading-relaxed font-light">
+                    {item.description?.substring(0, 110) || 'Deskripsi tidak tersedia'}...
                   </p>
-
-                  <div className="flex items-center gap-2 mb-4">
-                    <img src={markerIcon} alt="Marker" className="w-4 h-4" />
-                    <span className="text-gray-400 text-sm">
+                  <div className="flex items-center gap-3 mb-8 text-xs text-gray-500 font-light">
+                    <img src={markerIcon} alt="Marker" className="w-3 h-3 opacity-50" />
+                    <span className="tracking-wider uppercase">
                       {item.province || item.location || 'Lokasi tidak tersedia'}
                     </span>
                   </div>
 
                   <Link
                     to={`/places/${item.id}`}
-                    className="mt-4 px-6 py-1 border border-white text-white rounded-full hover:bg-white hover:text-black transition duration-300"
+                    className="group/btn relative inline-block w-full border border-white/30 hover:border-white text-center py-4 px-8 text-sm font-light tracking-widest uppercase transition-all duration-500 hover:bg-white hover:text-black transform hover:scale-105"
                   >
-                    Detail
+                    <span className="relative z-10">Detail</span>
+                    <div className="absolute inset-0 bg-white transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left"></div>
                   </Link>
                 </div>
               </div>
