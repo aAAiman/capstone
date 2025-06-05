@@ -24,7 +24,7 @@ export default function LandingPage() {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/places');
+        const response = await axios.get('https://capstone-backend-nvhm.vercel.app/places');
         const allPlaces = response.data;
 
         setTopPlaces(allPlaces.slice(0, 6));

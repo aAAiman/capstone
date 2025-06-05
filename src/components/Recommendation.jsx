@@ -20,7 +20,7 @@ export default function Recommendation() {
   const fetchPlaces = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/places');
+      const response = await fetch('https://capstone-backend-nvhm.vercel.app/places');
       const data = await response.json();
       setPlaces(data);
     } catch (err) {
@@ -33,7 +33,7 @@ export default function Recommendation() {
   const handleSearch = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/places?description=${description}&province=${province}&category=${category}`);
+      const response = await fetch(`https://capstone-backend-nvhm.vercel.app/places?description=${description}&province=${province}&category=${category}`);
       const data = await response.json();
       setPlaces(data);
     } catch (err) {

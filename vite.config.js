@@ -17,7 +17,7 @@ export default defineConfig({
         'index.css',
         'screenshots/landing-page.png',
         'screenshots/top-6.png',
-        'screenshots/sign-in.png'
+        'screenshots/sign-in.png',
       ],
       manifest: {
         name: 'JelajahJava.ID',
@@ -34,7 +34,6 @@ export default defineConfig({
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any',
-
           },
           {
             src: 'logo.png',
@@ -52,14 +51,14 @@ export default defineConfig({
             label: 'Beranda JelajahJava.ID',
           },
           {
-            src: 'screenshots/top-6.png', 
+            src: 'screenshots/top-6.png',
             sizes: '1920x1043',
             type: 'image/png',
             form_factor: 'wide',
             label: 'Top 6 Tempat Wisata',
           },
           {
-            src: 'screenshots/sign-in.png', 
+            src: 'screenshots/sign-in.png',
             sizes: '1920x1043',
             type: 'image/png',
             form_factor: 'wide',
@@ -67,7 +66,7 @@ export default defineConfig({
           },
           {
             src: 'screenshots/landing-page.png',
-            sizes: '1920x1043', 
+            sizes: '1920x1043',
             type: 'image/png',
             form_factor: 'narrow',
             label: 'Beranda JelajahJava.ID (Mobile)',
@@ -125,7 +124,7 @@ export default defineConfig({
             },
           },
           {
-            rlPattern : /^https?:\/\/capstone-backend-teal-sigma\.vercel\.app\/places/,
+            urlPattern: /^https:\/\/capstone-backend-teal-sigma\.vercel\.app\/places/,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'api-cache',
