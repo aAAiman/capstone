@@ -82,9 +82,15 @@ const DetailWisata = () => {
         });
         setRelatedPlaces(relatedResponse.data.slice(0, 3));
 
-        const savedWishlists = JSON.parse(localStorage.getItem('wishlists')) || [];
-        const bookmarked = savedWishlists.some((item) => item.id === response.data.id);
-        setIsBookmarked(bookmarked);
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+          const wishlistResponse = await axios.get('http://localhost:5000/wishlist', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          const isSaved = wishlistResponse.data.some((item) => item.id === response.data.id);
+          setIsBookmarked(isSaved);
+        }
 
         setLoading(false);
       } catch (err) {
@@ -92,30 +98,50 @@ const DetailWisata = () => {
         setLoading(false);
       }
     };
+
     fetchPlace();
   }, [id]);
 
-  const handleBookmark = () => {
-    const savedWishlists = JSON.parse(localStorage.getItem('wishlists')) || [];
-    const isAlreadyBookmarked = savedWishlists.some((item) => item.id === place.id);
 
-    if (isAlreadyBookmarked) {
-      const updatedWishlists = savedWishlists.filter((item) => item.id !== place.id);
-      localStorage.setItem('wishlists', JSON.stringify(updatedWishlists));
-      setIsBookmarked(false);
-      showAlert('warning', 'Wishlist Dihapus', 'Tempat wisata berhasil dihapus dari wishlist.');
-    } else {
-      savedWishlists.push(place);
-      localStorage.setItem('wishlists', JSON.stringify(savedWishlists));
-      setIsBookmarked(true);
-      showAlert('success', 'Wishlist Ditambahkan', 'Tempat wisata berhasil ditambahkan ke wishlist.');
+
+  const handleBookmark = async () => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      showAlert('warning', 'Kamu belum login!');
+      return;
+    }
+
+    try {
+      if (isBookmarked) {
+        await axios.delete(`http://localhost:5000/wishlist/${place.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setIsBookmarked(false);
+        showAlert('warning', 'Wishlist Dihapus', 'Tempat wisata berhasil dihapus dari wishlist.');
+      } else {
+        await axios.post(
+          'http://localhost:5000/wishlist',
+          { placeId: place.id },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setIsBookmarked(true);
+        showAlert('success', 'Wishlist Ditambahkan', 'Tempat wisata berhasil ditambahkan ke wishlist.');
+      }
+    } catch (error) {
+      console.error('Error response:', error.response?.data);
+      showAlert('warning', 'Gagal', error.response?.data?.message || 'Gagal memproses wishlist.');
     }
   };
+
+
 
   if (loading) return <p className="text-white text-center">Sedang memuat...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
   if (!place) return <p className="text-white text-center">Tempat wisata tidak ditemukan</p>;
 
+  const encodedGambar = place.gambar ? encodeURI(place.gambar) : 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop';
   return (
     <div className="min-h-screen bg-black text-white">
       <CustomAlert {...alert} onClose={closeAlert} />
@@ -124,7 +150,7 @@ const DetailWisata = () => {
       <div
         className="relative h-screen flex items-end justify-start"
         style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url(${place.gambar || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop'})`,
+          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url(${encodedGambar})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -142,7 +168,7 @@ const DetailWisata = () => {
               <div className="flex items-center space-x-6 mb-8">
                 <div className="flex items-center space-x-2 bg-yellow-500/20 px-4 py-2 rounded-full">
                   <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <span className="text-lg font-semibold text-yellow-400">{place.rating || 'N/A'}</span>
+                  <span className="text-lg font-semibold text-yellow-400">{place.rating}</span>
                 </div>
                 <button
                   onClick={handleBookmark}
@@ -162,7 +188,6 @@ const DetailWisata = () => {
               <p className="text-gray-300 leading-relaxed text-lg whitespace-pre-line">{place.description || 'Deskripsi tidak tersedia'}</p>
             </div>
 
-            {/* Related places */}
             <div>
               <h2 className="text-3xl font-bold mb-10">Tempat Terkait</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -170,7 +195,7 @@ const DetailWisata = () => {
                   <div key={index} className="group cursor-pointer">
                     <div className="relative overflow-hidden rounded-2xl bg-gray-900 shadow-2xl">
                       <img
-                        src={related.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop'}
+                        src={related.gambar || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop'}
                         alt={related.name}
                         className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                       />

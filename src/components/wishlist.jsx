@@ -6,7 +6,6 @@ import bgLandingPage from '../assets/bg-landing-page.png';
 const StarRating = ({ rating }) => {
   const fullStar = Math.floor(rating) >= 1;
   return (
-    
     <div className="flex items-center gap-1">
       <span className="text-yellow-400 text-lg">
         {fullStar ? '★' : '☆'}
@@ -19,13 +18,40 @@ const StarRating = ({ rating }) => {
 export default function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const savedWishlists = JSON.parse(localStorage.getItem('wishlists')) || [];
-    setTimeout(() => {
-      setWishlistItems(savedWishlists);
-      setLoading(false);
-    }, 500); // Simulasi loading
+    const fetchWishlist = async () => {
+      try {
+        const token = localStorage.getItem('accessToken'); 
+        if (!token) {
+          setError('Please log in to view your wishlist');
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch('http://localhost:5000/wishlist', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch wishlist');
+        }
+
+        const data = await response.json();
+        setWishlistItems(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchWishlist();
   }, []);
 
   return (
@@ -49,6 +75,16 @@ export default function Wishlist() {
         {loading ? (
           <div className="text-center">
             <p className="text-xl">Memuat wishlist...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center">
+            <p className="text-xl text-red-500">{error}</p>
+            <Link
+              to="/"
+              className="mt-4 inline-block px-6 py-2 border border-white text-white rounded-full hover:bg-white hover:text-black transition duration-300"
+            >
+              Jelajahi Tempat Wisata
+            </Link>
           </div>
         ) : wishlistItems.length === 0 ? (
           <div className="text-center">
@@ -88,7 +124,7 @@ export default function Wishlist() {
                   <div className="flex items-center gap-3 mb-8 text-xs text-gray-500 font-light">
                     <img src={markerIcon} alt="Marker" className="w-3 h-3 opacity-50" />
                     <span className="tracking-wider uppercase">
-                      {item.province || item.location || 'Lokasi tidak tersedia'}
+                      {item.province || item.adres || 'Lokasi tidak tersedia'}
                     </span>
                   </div>
 

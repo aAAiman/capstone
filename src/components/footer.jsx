@@ -7,9 +7,9 @@ export default function Footer() {
 
                 {/* Brand / Logo */}
                 <div>
-                    <h2 className="text-2xl font-bold">WisataIndo</h2>
+                    <h2 className="text-2xl font-bold">JelajahJawa.ID</h2>
                     <p className="mt-2 text-gray-400 text-sm">
-                        Temukan destinasi wisata terbaik di seluruh Indonesia.
+                        Temukan destinasi wisata terbaik di seluruh Pulau Jawa hanya di JelajahJawa.ID.
                     </p>
                 </div>
 
@@ -18,9 +18,9 @@ export default function Footer() {
                     <h3 className="text-lg font-semibold mb-2">Menu</h3>
                     <ul className="text-gray-400 text-sm space-y-1">
                         <li><a href="#" className="hover:text-white transition">Beranda</a></li>
-                        <li><a href="#" className="hover:text-white transition">Tentang</a></li>
                         <li><a href="/#top6" className="hover:text-white transition">Destinasi Top 6</a></li>
-                        <li><a href="#" className="hover:text-white transition">Kontak</a></li>
+                        <li><a href="/#pantai" className="hover:text-white transition">Destinasi Pantai</a></li>
+                        <li><a href="/#gunung" className="hover:text-white transition">Destinasi Gunung</a></li>
                     </ul>
                 </div>
 
@@ -37,7 +37,7 @@ export default function Footer() {
 
             {/* Copyright */}
             <div className="text-center text-gray-500 text-sm mt-8 border-t border-gray-700 pt-4">
-                © {new Date().getFullYear()} WisataIndo. All rights reserved.
+                © {new Date().getFullYear()} JelajahJawa.ID. All rights reserved.
             </div>
         </footer>
     );

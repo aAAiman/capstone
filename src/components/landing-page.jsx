@@ -80,14 +80,13 @@ export default function LandingPage() {
   }, []);
 
   const renderPlaces = (places, loadingKey, errorKey, title, delay = 0) => (
-    <section 
-      id={title.toLowerCase().replace(/\s+/g, '-')} 
+    <section
+      id={title.toLowerCase().replace(/\s+/g, '-')}
       data-animate
-      className={`bg-black text-white py-20 px-4 text-center transition-all duration-1000 transform ${
-        isVisible[title.toLowerCase().replace(/\s+/g, '-')] 
-          ? 'translate-y-0 opacity-100' 
+      className={`bg-black text-white py-20 px-4 text-center transition-all duration-1000 transform ${isVisible[title.toLowerCase().replace(/\s+/g, '-')]
+          ? 'translate-y-0 opacity-100'
           : 'translate-y-16 opacity-0'
-      }`}
+        }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       <div className="max-w-7xl mx-auto">
@@ -95,7 +94,7 @@ export default function LandingPage() {
           {title}
         </h2>
         <div className="w-24 h-px bg-white mx-auto mb-16 opacity-60"></div>
-        
+
         {loading[loadingKey] ? (
           <div className="flex justify-center items-center py-16">
             <div className="relative">
@@ -116,12 +115,11 @@ export default function LandingPage() {
             {places.map((place, index) => (
               <div
                 key={place.id}
-                className={`group bg-black border border-white/10 hover:border-white/30 transition-all duration-700 transform hover:scale-105 ${
-                  isVisible[title.toLowerCase().replace(/\s+/g, '-')] 
-                    ? 'translate-y-0 opacity-100' 
+                className={`group bg-black border border-white/10 hover:border-white/30 transition-all duration-700 transform hover:scale-105 ${isVisible[title.toLowerCase().replace(/\s+/g, '-')]
+                    ? 'translate-y-0 opacity-100'
                     : 'translate-y-12 opacity-0'
-                }`}
-                style={{ 
+                  }`}
+                style={{
                   transitionDelay: `${delay + (index * 150)}ms`
                 }}
               >
@@ -132,11 +130,11 @@ export default function LandingPage() {
                     className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
-                  
-                  
+
+
                   <div className="absolute bottom-0 left-0 w-full h-px bg-white/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 </div>
-                
+
                 <div className="p-8">
                   <h3 className="text-xl font-light mb-4 text-white tracking-wide group-hover:text-gray-300 transition-colors duration-300">
                     {place.name}
@@ -148,7 +146,7 @@ export default function LandingPage() {
                     <img src={markerIcon} alt="Marker" className="w-3 h-3 opacity-50" />
                     <span className="tracking-wider uppercase">{place.province || 'Provinsi tidak tersedia'}</span>
                   </div>
-                  
+
                   <Link
                     to={`/places/${place.id}`}
                     className="group/btn relative inline-block w-full border border-white/30 hover:border-white text-center py-4 px-8 text-sm font-light tracking-widest uppercase transition-all duration-500 hover:bg-white hover:text-black transform hover:scale-105"
@@ -182,7 +180,7 @@ export default function LandingPage() {
           <div className="absolute top-1/3 right-1/4 w-px h-24 bg-white -rotate-45 animate-pulse" style={{ animationDelay: '1s' }}></div>
           <div className="absolute bottom-1/4 left-1/3 w-px h-28 bg-white rotate-12 animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
-        
+
         <div className="relative z-10 max-w-6xl mx-auto">
           <h1 className="text-white font-light mb-8 animate-fade-in-up tracking-wide">
             <span className="block text-5xl md:text-7xl lg:text-9xl mb-6">
@@ -192,9 +190,9 @@ export default function LandingPage() {
               Pulau Jawa Tanpa Bingung Pilih Tujuan
             </span>
           </h1>
-          
+
           <div className="w-32 h-px bg-white mx-auto mb-8 opacity-60"></div>
-          
+
           <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light animate-fade-in-up tracking-wide" style={{ animationDelay: '0.5s' }}>
             Temukan destinasi wisata terbaik di Pulau Jawa dengan panduan lengkap dan terpercaya
           </p>
@@ -216,7 +214,9 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {renderPlaces(topPlaces, 'top', 'top', 'TOP 6 Tempat Wisata Di Pulau Jawa', 0)}
+      <div id="top6">
+        {renderPlaces(topPlaces, 'top', 'top', 'TOP 6 Tempat Wisata Di Pulau Jawa', 0)}
+      </div>
 
       <div className="flex justify-center my-16">
         <div className="flex items-center gap-4">
@@ -228,7 +228,10 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {renderPlaces(beachPlaces, 'beach', 'beach', 'Wisata Pantai Terpopuler', 200)}
+      <div id="pantai">
+        {renderPlaces(beachPlaces, 'beach', 'beach', 'Wisata Pantai Terpopuler', 200)}
+      </div>
+      
 
       <div className="flex justify-center my-16">
         <div className="flex items-center gap-4">
@@ -240,7 +243,9 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {renderPlaces(mountainPlaces, 'mountain', 'mountain', 'Wisata Gunung Terpopuler', 400)}
+      <div id="gunung">
+        {renderPlaces(mountainPlaces, 'mountain', 'mountain', 'Wisata Gunung Terpopuler', 400)}
+      </div>
 
       <div className="flex justify-center my-16">
         <div className="flex items-center gap-4">

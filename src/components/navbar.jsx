@@ -91,7 +91,7 @@ export default function Navbar() {
                   </Link>
                   <Link 
                     to="/signup" 
-                    className="border border-white/30 hover:border-white hover:bg-white hover:text-black px-4 py-2 text-sm font-light tracking-widest uppercase transition-all duration-300"
+                    className="border border-white/30 hover:border-white hover:bg-black  text-white px-4 py-2 text-sm font-light tracking-widest uppercase transition-all duration-300"
                   >
                     Register
                   </Link>
