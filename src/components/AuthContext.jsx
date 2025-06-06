@@ -52,8 +52,9 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   // ------------ login / logout helpers -------------
-  const login = (token, userData) => { // Tambahkan parameter userData
-    localStorage.setItem('accessToken', token);
+  const login = (accessToken, refreshToken, userData) => {
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
     if (userData) {
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
@@ -76,6 +77,12 @@ export const AuthProvider = ({ children }) => {
   // ------------ silent refresh on mount ------------
   useEffect(() => {
     const bootstrap = async () => {
+      const accessToken = localStorage.getItem('accessToken');
+      if (!accessToken) {
+        setIsAuthenticated(false);
+        setUser(null);
+        return;
+      }
       try {
         const { data } = await api.get('/token');
         localStorage.setItem('accessToken', data.accessToken);
