@@ -118,6 +118,7 @@ export default function Wishlist() {
                   <h3 className="text-xl font-light mb-4 text-white tracking-wide group-hover:text-gray-300 transition-colors duration-300">
                     {item.name}
                   </h3>
+                  <div className="text-yellow-400 text-lg text-center w-full mb-2">★ <span className="text-white">{item.rating}</span></div>
                   <p className="text-sm text-gray-400 mb-6 leading-relaxed font-light">
                     {item.description?.substring(0, 110) || 'Deskripsi tidak tersedia'}...
                   </p>

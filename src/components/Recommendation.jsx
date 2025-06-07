@@ -4,19 +4,12 @@ import { ChevronDown, X, Check } from 'lucide-react';
 import markerIcon from '../assets/marker.png';
 import bgLandingPage from '../assets/bg-landing-page.png';
 
-const StarRating = ({ rating = 4.5 }) => (
-  <div className="flex items-center gap-1">
-    <span className="text-yellow-400 text-lg">★</span>
-    <span className="text-white text-sm ml-1">{rating}</span>
-  </div>
-);
-
 // Komponen MultiSelectDropdown yang hilang
-const MultiSelectDropdown = ({ 
-  categories, 
-  selectedLabels, 
-  onLabelChange, 
-  placeholder = "Pilih kategori..." 
+const MultiSelectDropdown = ({
+  categories,
+  selectedLabels,
+  onLabelChange,
+  placeholder = "Pilih kategori..."
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -75,10 +68,9 @@ const MultiSelectDropdown = ({
             </div>
           )}
         </div>
-        <ChevronDown 
-          className={`w-5 h-5 text-gray-400 transition-transform ${
-            isOpen ? 'rotate-180' : ''
-          }`} 
+        <ChevronDown
+          className={`w-5 h-5 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''
+            }`}
         />
       </button>
 
@@ -96,7 +88,7 @@ const MultiSelectDropdown = ({
               </button>
             </div>
           )}
-          
+
           {/* Options */}
           <div className="py-1">
             {categories.map((category) => (
@@ -211,7 +203,7 @@ export default function Recommendation() {
           <option value="Jawa Tengah">Jawa Tengah</option>
           <option value="Jawa Timur">Jawa Timur</option>
         </select>
-        
+
         {/* Fixed: Single MultiSelectDropdown component, not in map */}
         <MultiSelectDropdown
           categories={categories}
@@ -228,6 +220,11 @@ export default function Recommendation() {
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Contoh: suasana alam yang tenang dan sejuk"
           className="w-full px-4 py-3 rounded border border-white/20 bg-black text-white placeholder-gray-400"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
         />
         <button
           onClick={handleSearch}
@@ -236,6 +233,7 @@ export default function Recommendation() {
           Cari
         </button>
       </div>
+
 
       {/* Cards */}
       <div className="max-w-7xl mx-auto">
@@ -259,13 +257,15 @@ export default function Recommendation() {
                 </div>
 
                 <div className="p-8">
-                  <h3 className="text-xl font-light mb-2 text-white tracking-wide group-hover:text-gray-300 transition-colors duration-300">
+                  <h3 className="text-xl font-light mb-4 text-white tracking-wide group-hover:text-gray-300 transition-colors duration-300 text-center">
                     {place.name}
                   </h3>
-                  <StarRating rating={place.rating} />
-                  <p className="text-sm text-gray-400 mt-4 mb-6 leading-relaxed font-light">
+
+                  <div className="text-yellow-400 text-lg text-center w-full mb-2">★ <span className="text-white">{place.rating}</span></div>
+                  <p className="text-sm text-gray-400 mb-6 leading-relaxed font-light text-center">
                     {place.description?.substring(0, 110) || 'Deskripsi tidak tersedia'}...
                   </p>
+
                   <div className="flex items-center gap-3 mb-8 text-xs text-gray-500 font-light">
                     <img src={markerIcon} alt="Marker" className="w-3 h-3 opacity-50" />
                     <span className="tracking-wider uppercase">{place.province}</span>
