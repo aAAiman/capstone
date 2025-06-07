@@ -135,18 +135,18 @@ export default function Navbar() {
                   Home
                 </Link>
                 <Link 
-                  to="/#" 
+                  to="/rekomendasi" 
                   onClick={() => setIsOpen(false)}
                   className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2 border-b border-transparent hover:border-white/20"
                 >
                   Rekomendasi
                 </Link>
                 <Link 
-                  to="/#" 
+                  to="/wishlist" 
                   onClick={() => setIsOpen(false)}
                   className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2 border-b border-transparent hover:border-white/20"
                 >
-                  Forum
+                  Whislist
                 </Link>
               </div>
 
@@ -162,7 +162,7 @@ export default function Navbar() {
                     </span>
                     <button 
                       onClick={handleLogout} 
-                      className="border border-white/30 hover:border-white hover:bg-white hover:text-black px-4 py-3 text-sm font-light tracking-widest uppercase transition-all duration-300 self-start"
+                      className=" text-white/80 border border-white/30 hover:border-white hover:bg-black hover:text-white px-4 py-3 text-sm font-light tracking-widest uppercase transition-all duration-300 self-start"
                     >
                       Logout
                     </button>
@@ -179,7 +179,7 @@ export default function Navbar() {
                     <Link 
                       to="/signup" 
                       onClick={() => setIsOpen(false)}
-                      className="border border-white/30 hover:border-white hover:bg-white hover:text-black px-4 py-3 text-sm font-light tracking-widest uppercase transition-all duration-300 self-start"
+                      className="text-white/80 border border-white/30 hover:border-white hover:bg-black hover:text-white px-4 py-3 text-sm font-light tracking-widest uppercase transition-all duration-300 self-start"
                     >
                       Register
                     </Link>
