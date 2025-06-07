@@ -84,8 +84,8 @@ export default function LandingPage() {
       id={title.toLowerCase().replace(/\s+/g, '-')}
       data-animate
       className={`bg-black text-white py-20 px-4 text-center transition-all duration-1000 transform ${isVisible[title.toLowerCase().replace(/\s+/g, '-')]
-          ? 'translate-y-0 opacity-100'
-          : 'translate-y-16 opacity-0'
+        ? 'translate-y-0 opacity-100'
+        : 'translate-y-16 opacity-0'
         }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
@@ -116,8 +116,8 @@ export default function LandingPage() {
               <div
                 key={place.id}
                 className={`group bg-black border border-white/10 hover:border-white/30 transition-all duration-700 transform hover:scale-105 ${isVisible[title.toLowerCase().replace(/\s+/g, '-')]
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-12 opacity-0'
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-12 opacity-0'
                   }`}
                 style={{
                   transitionDelay: `${delay + (index * 150)}ms`
@@ -139,6 +139,7 @@ export default function LandingPage() {
                   <h3 className="text-xl font-light mb-4 text-white tracking-wide group-hover:text-gray-300 transition-colors duration-300">
                     {place.name}
                   </h3>
+                  <div className="text-yellow-400 text-lg text-center w-full mb-2">★ <span className="text-white">{place.rating}</span></div>
                   <p className="text-sm text-gray-400 mb-6 leading-relaxed font-light">
                     {place.description?.substring(0, 110) || 'Deskripsi tidak tersedia'}...
                   </p>
@@ -231,7 +232,7 @@ export default function LandingPage() {
       <div id="pantai">
         {renderPlaces(beachPlaces, 'beach', 'beach', 'Wisata Pantai Terpopuler', 200)}
       </div>
-      
+
 
       <div className="flex justify-center my-16">
         <div className="flex items-center gap-4">
