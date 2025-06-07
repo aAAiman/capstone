@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import bgRegis from '../assets/bg-regis.jpg'; 
+import bgRegis from '../assets/bg-regis.jpg';
 import userIcon from '../assets/user-icon.png';
 import emailIcon from '../assets/email-icon.png';
 import eyeOpenIcon from '../assets/eye-open.png';
@@ -29,9 +29,9 @@ export default function SignUp() {
         password: password,
         confpassword: confpassword
       });
-      navigate('/signin'); 
+      navigate('/signin');
     } catch (error) {
-      if(error.response){
+      if (error.response) {
         setMsg(error.response.data.msg);
       }
     }
@@ -47,100 +47,110 @@ export default function SignUp() {
         </p>
         <p className="mb-4 text-red-500">{msg}</p>
 
-        {/* Username */}
-        <div className="mb-4">
-          <label className="block mb-1">Name</label> 
-          <div className="flex items-center border-b border-white">
-            <input
-              type="text"
-              placeholder="Username"
-              className="bg-black w-full p-2 focus:outline-none text-white"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <img src={userIcon} alt="User Icon" className="w-6 h-6 pr-2" />
-          </div>
-        </div>
-
-        {/* Email */}
-        <div className="mb-4">
-          <label className="block mb-1">Email</label>
-          <div className="flex items-center border-b border-white">
-            <input
-              type="email"
-              placeholder="Email"
-              className="bg-black w-full p-2 focus:outline-none text-white"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <img src={emailIcon} alt="Email Icon" className="w-6 h-6 pr-2" />
-          </div>
-        </div>
-
-        {/* Password */}
-        <div className="mb-4">
-          <label className="block mb-1">Password</label>
-          <div className="flex items-center border-b border-white">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Password"
-              className="bg-black w-full p-2 focus:outline-none text-white"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="focus:outline-none pr-2"
-              aria-label="Toggle Password Visibility"
-            >
-              <img
-                src={showPassword ? eyeClosedIcon : eyeOpenIcon}
-                alt="Toggle Password"
-                className="w-6 h-6"
+        {/* Bungkus input dan tombol dalam <form> */}
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          Register(e);
+        }} className="space-y-6">
+          {/* Username */}
+          <div>
+            <label className="block mb-2 text-base font-medium">Name</label>
+            <div className="flex items-center border-b border-white">
+              <input
+                type="text"
+                placeholder="Username"
+                className="bg-black w-full p-3 focus:outline-none text-white text-base"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
-            </button>
+              <img src={userIcon} alt="User Icon" className="w-7 h-7 ml-3 mr-2" />
+            </div>
           </div>
-        </div>
 
-        {/* Confirm Password */}
-        <div className="mb-4">
-          <label className="block mb-1"> Confirm Password</label>
-          <div className="flex items-center border-b border-white">
-            <input
-              type={showConfPassword ? 'text' : 'password'}
-              placeholder="Confirm Password"
-              className="bg-black w-full p-2 focus:outline-none text-white"
-              value={confpassword}
-              onChange={(e) => setConfPassword(e.target.value)}
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfPassword(!showConfPassword )}
-              className="focus:outline-none pr-2"
-              aria-label="Toggle Password Visibility"
-            >
-              <img
-                src={showConfPassword  ? eyeClosedIcon : eyeOpenIcon}
-                alt="Toggle Password"
-                className="w-6 h-6"
+          {/* Email */}
+          <div>
+            <label className="block mb-2 text-base font-medium">Email</label>
+            <div className="flex items-center border-b border-white">
+              <input
+                type="email"
+                placeholder="Email"
+                className="bg-black w-full p-3 focus:outline-none text-white text-base"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-            </button>
+              <img src={emailIcon} alt="Email Icon" className="w-7 h-7 ml-3 mr-2" />
+            </div>
           </div>
-        </div>
 
-        {/* Terms */}
-        <div className="flex items-center mb-6 text-sm">
-          <input type="checkbox" className="mr-2" />
-          <span>
-            I Agree To The <a href="#" className="text-blue-400">Terms & Conditions</a>
-          </span>
-        </div>
+          {/* Password */}
+          <div>
+            <label className="block mb-2 text-base font-medium">Password</label>
+            <div className="flex items-center border-b border-white">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Password"
+                className="bg-black w-full p-3 focus:outline-none text-white text-base"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="focus:outline-none ml-3 pr-2"
+                aria-label="Toggle Password Visibility"
+              >
+                <img
+                  src={showPassword ? eyeClosedIcon : eyeOpenIcon}
+                  alt="Toggle Password"
+                  className="w-7 h-7"
+                />
+              </button>
+            </div>
+          </div>
 
-        {/* Sign up button */}
-        <button  onClick={Register} className="bg-red-600 text-white p-2 rounded w-full mb-4 hover:bg-red-700 transition">
-          Sign up
-        </button>
+          {/* Confirm Password */}
+          <div>
+            <label className="block mb-2 text-base font-medium">Confirm Password</label>
+            <div className="flex items-center border-b border-white">
+              <input
+                type={showConfPassword ? 'text' : 'password'}
+                placeholder="Confirm Password"
+                className="bg-black w-full p-3 focus:outline-none text-white text-base"
+                value={confpassword}
+                onChange={(e) => setConfPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfPassword(!showConfPassword)}
+                className="focus:outline-none ml-3 pr-2"
+                aria-label="Toggle Password Visibility"
+              >
+                <img
+                  src={showConfPassword ? eyeClosedIcon : eyeOpenIcon}
+                  alt="Toggle Password"
+                  className="w-7 h-7"
+                />
+              </button>
+            </div>
+          </div>
+
+          {/* Terms */}
+          <div className="flex items-center mb-6 text-sm">
+            <input type="checkbox" className="mr-3 w-4 h-4" />
+            <span>
+              I Agree To The <a href="#" className="text-blue-400 underline">Terms & Conditions</a>
+            </span>
+          </div>
+
+          {/* Sign up button */}
+          <button
+            type="submit"
+            className="bg-red-600 text-white p-3 rounded w-full mb-4 hover:bg-red-700 transition text-lg font-semibold"
+          >
+            Sign up
+          </button>
+        </form>
+
 
         {/* Create an Account */}
         <p className="mt-6 text-center text-sm">Create an Account</p>
@@ -155,5 +165,6 @@ export default function SignUp() {
         />
       </div>
     </div>
+
   );
 }
