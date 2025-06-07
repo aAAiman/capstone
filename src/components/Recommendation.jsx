@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronDown, X, Check } from 'lucide-react';
 import markerIcon from '../assets/marker.png';
 import bgLandingPage from '../assets/bg-landing-page.png';
 
@@ -10,41 +11,175 @@ const StarRating = ({ rating = 4.5 }) => (
   </div>
 );
 
+// Komponen MultiSelectDropdown yang hilang
+const MultiSelectDropdown = ({ 
+  categories, 
+  selectedLabels, 
+  onLabelChange, 
+  placeholder = "Pilih kategori..." 
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const removeLabel = (category) => {
+    onLabelChange(category);
+  };
+
+  const clearAll = () => {
+    selectedLabels.forEach(label => onLabelChange(label));
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      {/* Dropdown Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full bg-black border border-white/20 rounded px-4 py-3 text-left text-white flex items-center justify-between hover:border-white/40 transition-colors"
+      >
+        <div className="flex-1">
+          {selectedLabels.length === 0 ? (
+            <span className="text-gray-400">{placeholder}</span>
+          ) : (
+            <div className="flex flex-wrap gap-1">
+              {selectedLabels.map((label) => (
+                <span
+                  key={label}
+                  className="bg-blue-600 text-white px-2 py-1 rounded text-sm flex items-center gap-1"
+                >
+                  {label}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeLabel(label);
+                    }}
+                    className="hover:bg-blue-700 rounded-full p-0.5"
+                  >
+                    <X size={12} />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+        <ChevronDown 
+          className={`w-5 h-5 text-gray-400 transition-transform ${
+            isOpen ? 'rotate-180' : ''
+          }`} 
+        />
+      </button>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-black border border-white/20 rounded shadow-lg z-10">
+          {/* Header with Clear All */}
+          {selectedLabels.length > 0 && (
+            <div className="px-4 py-2 border-b border-white/10">
+              <button
+                onClick={clearAll}
+                className="text-red-400 hover:text-red-300 text-sm"
+              >
+                Hapus Semua
+              </button>
+            </div>
+          )}
+          
+          {/* Options */}
+          <div className="py-1">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => onLabelChange(category)}
+                className="w-full px-4 py-2 text-left text-white hover:bg-white/10 flex items-center justify-between transition-colors"
+              >
+                <span>{category}</span>
+                {selectedLabels.includes(category) && (
+                  <Check size={16} className="text-blue-400" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function Recommendation() {
   const [places, setPlaces] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState('');
   const [province, setProvince] = useState('');
-  const [category, setCategory] = useState('');
+  const [selectedLabels, setSelectedLabels] = useState([]);
+  const categories = ['Alam', 'Budaya', 'Sejarah', 'Religi', 'Edukasi'];
 
-  const fetchPlaces = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('https://capstone-backend-nvhm.vercel.app/places');
-      const data = await response.json();
-      setPlaces(data);
-    } catch (err) {
-      console.error('Gagal memuat tempat wisata:', err);
-    } finally {
-      setLoading(false);
-    }
+  const handleLabelChange = (category) => {
+    setSelectedLabels((prev) =>
+      prev.includes(category)
+        ? prev.filter((label) => label !== category)
+        : [...prev, category]
+    );
   };
 
   const handleSearch = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`https://capstone-backend-nvhm.vercel.app/places?description=${description}&province=${province}&category=${category}`);
+      const response = await fetch('https://capstone-cc25-cf102.revivaaiman.my.id/recommend', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          province,
+          selected_labels: selectedLabels.map((label) => label.toLowerCase()),
+          description,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal mengambil rekomendasi');
+      }
+
       const data = await response.json();
-      setPlaces(data);
+      if (data.error) {
+        alert(data.error);
+        setPlaces([]);
+      } else {
+        setPlaces(
+          data.recommendations.map((place, index) => ({
+            id: place.id || index,
+            name: place.place_name,
+            province: place.province,
+            description: place.deskripsi,
+            rating: 4.5,
+            gambar: place.gambar || 'https://source.unsplash.com/300x200/?travel',
+          }))
+        );
+      }
     } catch (err) {
       console.error('Gagal mencari tempat wisata:', err);
+      alert('Gagal mengambil rekomendasi');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPlaces();
+    // Opsional: Ambil tempat wisata awal jika diperlukan
+    // fetchPlaces();
   }, []);
 
   return (
@@ -59,9 +194,9 @@ export default function Recommendation() {
     >
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-serif mb-4">Rekomendasi tempat wisata</h1>
+        <h1 className="text-3xl md:text-4xl font-serif mb-4">Rekomendasi Tempat Wisata</h1>
         <div className="w-32 h-1 bg-white mx-auto"></div>
-        <p className="text-gray-300 mt-4">Cari tempat wisata sesuai keinginan mu</p>
+        <p className="text-gray-300 mt-4">Cari tempat wisata sesuai keinginanmu</p>
       </div>
 
       {/* Filter Dropdown & Input */}
@@ -76,18 +211,14 @@ export default function Recommendation() {
           <option value="Jawa Tengah">Jawa Tengah</option>
           <option value="Jawa Timur">Jawa Timur</option>
         </select>
-        <select
-          className="bg-black border border-white/20 px-4 py-3 rounded text-white"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="">Tempat Wisata</option>
-          <option value="Alam">Alam</option>
-          <option value="Budaya">Budaya</option>
-          <option value="Sejarah">Sejarah</option>
-          <option value="Religi">Religi</option>
-          <option value="Edukasi">Edukasi</option>
-        </select>
+        
+        {/* Fixed: Single MultiSelectDropdown component, not in map */}
+        <MultiSelectDropdown
+          categories={categories}
+          selectedLabels={selectedLabels}
+          onLabelChange={handleLabelChange}
+          placeholder="Pilih kategori wisata..."
+        />
       </div>
 
       <div className="max-w-3xl mx-auto mb-6 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4">
@@ -102,7 +233,7 @@ export default function Recommendation() {
           onClick={handleSearch}
           className="bg-white text-black px-6 py-3 rounded hover:bg-gray-200 transition"
         >
-          Search
+          Cari
         </button>
       </div>
 
@@ -112,15 +243,14 @@ export default function Recommendation() {
           <p className="text-center text-xl">Memuat rekomendasi...</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {places.map((place, index) => (
+            {places.map((place) => (
               <div
                 key={place.id}
                 className="group bg-black border border-white/10 hover:border-white/30 transition-all duration-700 transform hover:scale-105"
-                style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={place.gambar || 'https://source.unsplash.com/300x200/?travel'}
+                    src={place.gambar}
                     alt={place.name}
                     className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
                   />
@@ -138,9 +268,7 @@ export default function Recommendation() {
                   </p>
                   <div className="flex items-center gap-3 mb-8 text-xs text-gray-500 font-light">
                     <img src={markerIcon} alt="Marker" className="w-3 h-3 opacity-50" />
-                    <span className="tracking-wider uppercase">
-                      {place.province || place.adres || 'Lokasi tidak tersedia'}
-                    </span>
+                    <span className="tracking-wider uppercase">{place.province}</span>
                   </div>
 
                   <Link
