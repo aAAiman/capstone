@@ -24,7 +24,7 @@ export default function SignUp() {
   const Register = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://capstone-backend-nvhm.vercel.app/register', {
+      await axios.post('https://capstone-be.revivaaiman.my.id/register', {
         name: name,
         email: email,
         password: password,

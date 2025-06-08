@@ -30,7 +30,7 @@ export default function Wishlist() {
           return;
         }
 
-        const response = await fetch('https://capstone-backend-nvhm.vercel.app/wishlist', {
+        const response = await fetch('https://capstone-be.revivaaiman.my.id/wishlist', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

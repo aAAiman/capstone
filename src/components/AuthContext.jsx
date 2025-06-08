@@ -4,7 +4,7 @@ import axios from 'axios';
 export const AuthContext = createContext();
 
 const api = axios.create({
-  baseURL: 'https://capstone-backend-nvhm.vercel.app',
+  baseURL: 'https://capstone-be.revivaaiman.my.id',
   withCredentials: true,
 });
 
