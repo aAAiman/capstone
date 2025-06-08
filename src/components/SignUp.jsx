@@ -29,7 +29,7 @@ export default function SignUp() {
         email: email,
         password: password,
         confpassword: confpassword,
-        termsAccepted: isTermsAccepted
+        termsAccepted: true
       });
       navigate('/signin');
     } catch (error) {
