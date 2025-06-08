@@ -94,13 +94,6 @@ export default function SignIn() {
             </div>
           </div>
 
-          {/* Lupa Password */}
-          <div className="text-right mb-4">
-            <a href="#" className="text-white text-sm underline">
-              Lupa Password ?
-            </a>
-          </div>
-
           {/* Submit */}
           <button
             type="submit"

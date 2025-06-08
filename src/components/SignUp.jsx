@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import bgRegis from '../assets/bg-regis.jpg';
+import bgLogin from "../assets/bg-login.png";
 import userIcon from '../assets/user-icon.png';
 import emailIcon from '../assets/email-icon.png';
 import eyeOpenIcon from '../assets/eye-open.png';
 import eyeClosedIcon from '../assets/eye-closed.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
-
+import TermsModal from "../components/TermsModal";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +17,8 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [confpassword, setConfPassword] = useState('');
   const [msg, setMsg] = useState('');
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false); // New state for checkbox
+  const [showTermsModal, setShowTermsModal] = useState(false); // State for modal visibility
   const navigate = useNavigate();
 
   const Register = async (e) => {
@@ -43,15 +44,12 @@ export default function SignUp() {
       <div className="w-full md:w-1/2 bg-black text-white flex flex-col justify-center px-6 md:px-12 py-8">
         <h1 className="text-3xl md:text-4xl font-bold mb-6">Sign Up</h1>
         <p className="mb-4 text-sm">
-          Already Have An Account? <Link to="/" className="text-blue-400">Back to Home</Link>
+          Already Have An Account? <Link to="/signin" className="text-blue-400">Back to Sign In</Link>
         </p>
         <p className="mb-4 text-red-500">{msg}</p>
 
         {/* Bungkus input dan tombol dalam <form> */}
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          Register(e);
-        }} className="space-y-6">
+        <form onSubmit={Register} className="space-y-6">
           {/* Username */}
           <div>
             <label className="block mb-2 text-base font-medium">Name</label>
@@ -136,21 +134,37 @@ export default function SignUp() {
 
           {/* Terms */}
           <div className="flex items-center mb-6 text-sm">
-            <input type="checkbox" className="mr-3 w-4 h-4" />
+            <input
+              type="checkbox"
+              className="mr-3 w-4 h-4"
+              checked={isTermsAccepted}
+              onChange={(e) => setIsTermsAccepted(e.target.checked)}
+            />
             <span>
-              I Agree To The <a href="#" className="text-blue-400 underline">Terms & Conditions</a>
+              I Agree To The{' '}
+              <button
+                type="button"
+                onClick={() => setShowTermsModal(true)}
+                className="text-blue-400 underline focus:outline-none"
+              >
+                Terms & Conditions
+              </button>
             </span>
           </div>
 
           {/* Sign up button */}
           <button
             type="submit"
-            className="bg-red-600 text-white p-3 rounded w-full mb-4 hover:bg-red-700 transition text-lg font-semibold"
+            className={`text-white p-2 rounded w-full transition ${
+              isTermsAccepted
+                ? 'bg-red-600 text-white hover:bg-red-700'
+                : 'bg-gray-600 text-gray-300 cursor-not-allowed'
+            }`}
+            disabled={!isTermsAccepted}
           >
             Sign up
           </button>
         </form>
-
 
         {/* Create an Account */}
         <p className="mt-6 text-center text-sm">Create an Account</p>
@@ -159,12 +173,14 @@ export default function SignUp() {
       {/* Background */}
       <div className="hidden md:block w-full md:w-1/2 h-64 md:h-full">
         <img
-          src={bgRegis}
+          src={bgLogin}
           alt="Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
         />
       </div>
-    </div>
 
+      {/* Terms Modal */}
+      {showTermsModal && <TermsModal onClose={() => setShowTermsModal(false)} />}
+    </div>
   );
 }
