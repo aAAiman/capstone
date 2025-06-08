@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Bookmark, BookmarkCheck, Star, CheckCircle, X } from 'lucide-react';
 import markerIcon from '../assets/marker.png';
@@ -74,17 +74,32 @@ const DetailWisata = () => {
   useEffect(() => {
     const fetchPlace = async () => {
       try {
-        const response = await axios.get(`https://capstone-backend-nvhm.vercel.app/places/${id}`);
+        const response = await axios.get(`http://localhost:5000/places/${id}`);
         setPlace(response.data);
 
-        const relatedResponse = await axios.get(`https://capstone-backend-nvhm.vercel.app/places`, {
-          params: { province: response.data.province, notId: id }
+        const relatedResponse = await axios.get(`http://localhost:5000/places`, {
+          params: {
+            province: response.data.province,
+            notId: id, // Pastikan ini benar-benar "notId" tanpa karakter tambahan
+            description: encodeURIComponent(response.data.description || '') // Encode untuk keamanan
+          }
         });
-        setRelatedPlaces(relatedResponse.data.slice(0, 3));
+        console.log('Related places response:', relatedResponse.data); // Log respons
+        setRelatedPlaces(
+          relatedResponse.data.map((place, index) => ({
+            id: place.id || index,
+            name: place.name,
+            province: place.province,
+            description: place.description,
+            gambar: place.gambar,
+            rating: place.rating || 4.5,
+            adress: place.adress || null
+          })).slice(0, 3)
+        );
 
         const token = localStorage.getItem('accessToken');
         if (token) {
-          const wishlistResponse = await axios.get('https://capstone-backend-nvhm.vercel.app/wishlist', {
+          const wishlistResponse = await axios.get('http://localhost:5000/wishlist', {
             headers: { Authorization: `Bearer ${token}` },
           });
 
@@ -95,6 +110,7 @@ const DetailWisata = () => {
         setLoading(false);
       } catch (err) {
         setError('Gagal memuat detail tempat wisata');
+        console.error('Error fetching place:', err.response ? err.response.data : err.message); // Log detail error
         setLoading(false);
       }
     };
@@ -102,25 +118,23 @@ const DetailWisata = () => {
     fetchPlace();
   }, [id]);
 
-
-
   const handleBookmark = async () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      showAlert('warning', 'Kamu belum login!');
+      showAlert('warning', 'Kamu belum login!', 'Silakan login untuk menambahkan ke wishlist.');
       return;
     }
 
     try {
       if (isBookmarked) {
-        await axios.delete(`https://capstone-backend-nvhm.vercel.app/wishlist/${place.id}`, {
+        await axios.delete(`http://localhost:5000/wishlist/${place.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setIsBookmarked(false);
         showAlert('warning', 'Wishlist Dihapus', 'Tempat wisata berhasil dihapus dari wishlist.');
       } else {
         await axios.post(
-          'https://capstone-backend-nvhm.vercel.app/wishlist',
+          'http://localhost:5000/wishlist',
           { placeId: place.id },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -135,8 +149,6 @@ const DetailWisata = () => {
     }
   };
 
-
-
   if (loading) return <p className="text-white text-center">Sedang memuat...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
   if (!place) return <p className="text-white text-center">Tempat wisata tidak ditemukan</p>;
@@ -146,7 +158,6 @@ const DetailWisata = () => {
     <div className="min-h-screen bg-black text-white">
       <CustomAlert {...alert} onClose={closeAlert} />
 
-      {/* Header with image */}
       <div
         className="relative h-screen flex items-end justify-start"
         style={{
@@ -192,7 +203,11 @@ const DetailWisata = () => {
               <h2 className="text-3xl font-bold mb-10">Tempat Terkait</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedPlaces.map((related, index) => (
-                  <div key={index} className="group cursor-pointer">
+                  <Link
+                    key={related.id || index}
+                    to={`/places/${related.id}`}
+                    className="group cursor-pointer"
+                  >
                     <div className="relative overflow-hidden rounded-2xl bg-gray-900 shadow-2xl">
                       <img
                         src={related.gambar || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop'}
@@ -215,11 +230,10 @@ const DetailWisata = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
-
           </div>
         </div>
       </div>

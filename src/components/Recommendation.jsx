@@ -54,7 +54,7 @@ const MultiSelectDropdown = ({
                   className="bg-blue-600 text-white px-2 py-1 rounded text-sm flex items-center gap-1"
                 >
                   {label}
-                  <button
+                  <span
                     onClick={(e) => {
                       e.stopPropagation();
                       removeLabel(label);
@@ -62,7 +62,7 @@ const MultiSelectDropdown = ({
                     className="hover:bg-blue-700 rounded-full p-0.5"
                   >
                     <X size={12} />
-                  </button>
+                  </span>
                 </span>
               ))}
             </div>
@@ -129,7 +129,7 @@ export default function Recommendation() {
   const handleSearch = async () => {
     try {
       setLoading(true);
-      const response = await fetch('https://capstone-cc25-cf102.revivaaiman.my.id/recommend', {
+      const response = await fetch('http://127.0.0.1:5000/recommend', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -152,11 +152,11 @@ export default function Recommendation() {
       } else {
         setPlaces(
           data.recommendations.map((place, index) => ({
-            id: place.id || index,
+            id: place.id,
             name: place.place_name,
             province: place.province,
             description: place.deskripsi,
-            rating: 4.5,
+            rating: place.rating,
             gambar: place.gambar || 'https://source.unsplash.com/300x200/?travel',
           }))
         );
@@ -170,9 +170,8 @@ export default function Recommendation() {
   };
 
   useEffect(() => {
-    // Opsional: Ambil tempat wisata awal jika diperlukan
-    // fetchPlaces();
-  }, []);
+    console.log('Places:', places);
+  }, [places]);
 
   return (
     <div
@@ -248,9 +247,12 @@ export default function Recommendation() {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={place.gambar}
+                    src={place.gambar || 'https://source.unsplash.com/300x200/?travel'}
                     alt={place.name}
-                    className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                    className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110"
+                    onError={(e) => {
+                      e.target.src = 'https://source.unsplash.com/300x200/?travel'; // Fallback jika gambar gagal dimuat
+                    }}
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
                   <div className="absolute bottom-0 left-0 w-full h-px bg-white/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>

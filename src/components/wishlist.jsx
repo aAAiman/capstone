@@ -30,7 +30,7 @@ export default function Wishlist() {
           return;
         }
 
-        const response = await fetch('https://capstone-backend-nvhm.vercel.app/wishlist', {
+        const response = await fetch('http://localhost:5000/wishlist', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -108,7 +108,7 @@ export default function Wishlist() {
                   <img
                     src={item.gambar || 'https://source.unsplash.com/300x200/?travel'}
                     alt={item.name}
-                    className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                    className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
                   <div className="absolute bottom-0 left-0 w-full h-px bg-white/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>

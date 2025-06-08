@@ -24,7 +24,7 @@ export default function LandingPage() {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const response = await axios.get('https://capstone-backend-nvhm.vercel.app/places');
+        const response = await axios.get('http://localhost:5000/places');
         const allPlaces = response.data;
 
         setTopPlaces(allPlaces.slice(0, 6));
@@ -127,7 +127,7 @@ export default function LandingPage() {
                   <img
                     src={place.gambar}
                     alt={place.name}
-                    className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                    className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
 
