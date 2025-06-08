@@ -28,7 +28,8 @@ export default function SignUp() {
         name: name,
         email: email,
         password: password,
-        confpassword: confpassword
+        confpassword: confpassword,
+        termsAccepted: isTermsAccepted
       });
       navigate('/signin');
     } catch (error) {
