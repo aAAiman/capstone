@@ -30,7 +30,7 @@ export default function Wishlist() {
           return;
         }
 
-        const response = await fetch('http://localhost:5000/wishlist', {
+        const response = await fetch('https://capstone-backend-nvhm.vercel.app/wishlist', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

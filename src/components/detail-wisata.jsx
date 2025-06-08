@@ -74,10 +74,10 @@ const DetailWisata = () => {
   useEffect(() => {
     const fetchPlace = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/places/${id}`);
+        const response = await axios.get(`https://capstone-backend-nvhm.vercel.app/places/${id}`);
         setPlace(response.data);
 
-        const relatedResponse = await axios.get(`http://localhost:5000/places`, {
+        const relatedResponse = await axios.get(`https://capstone-backend-nvhm.vercel.app/places`, {
           params: {
             province: response.data.province,
             notId: id, // Pastikan ini benar-benar "notId" tanpa karakter tambahan
@@ -99,7 +99,7 @@ const DetailWisata = () => {
 
         const token = localStorage.getItem('accessToken');
         if (token) {
-          const wishlistResponse = await axios.get('http://localhost:5000/wishlist', {
+          const wishlistResponse = await axios.get('https://capstone-backend-nvhm.vercel.app/wishlist', {
             headers: { Authorization: `Bearer ${token}` },
           });
 
@@ -127,14 +127,14 @@ const DetailWisata = () => {
 
     try {
       if (isBookmarked) {
-        await axios.delete(`http://localhost:5000/wishlist/${place.id}`, {
+        await axios.delete(`https://capstone-backend-nvhm.vercel.app/wishlist/${place.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setIsBookmarked(false);
         showAlert('warning', 'Wishlist Dihapus', 'Tempat wisata berhasil dihapus dari wishlist.');
       } else {
         await axios.post(
-          'http://localhost:5000/wishlist',
+          'https://capstone-backend-nvhm.vercel.app/wishlist',
           { placeId: place.id },
           {
             headers: { Authorization: `Bearer ${token}` },
