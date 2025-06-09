@@ -38,7 +38,6 @@ export default function Footer() {
                     <h3 className="text-lg font-semibold mb-2">Kontak</h3>
                     <ul className="text-gray-400 text-sm space-y-1">
                         <li>Email: <a href="mailto:admin@jelajahjawa.id" className="hover:text-white transition">support@jelajahjawa.id</a></li>
-                        <li>Instagram: <a href="https://instagram.com/jelajahjawa.id" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">@jelajahjawa.id</a></li>
                         <li>WhatsApp: <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">+62 812 3456 7890</a></li>
                     </ul>
                 </div>
