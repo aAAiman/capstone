@@ -6,7 +6,7 @@ import eyeClosedIcon from "../assets/eye-closed.png";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
-export default function SignIn() {
+export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +46,7 @@ export default function SignIn() {
 
       {/* Kanan - Form */}
       <div className="w-full md:w-1/2 bg-black text-white flex flex-col justify-center px-6 md:px-12 py-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-6">Sign in</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-6">Log in</h1>
         <p className="mb-4 text-sm">
           Back to Home? <Link to="/" className="text-blue-400">Back to Home</Link>
         </p>
@@ -105,15 +105,15 @@ export default function SignIn() {
           </button>
         </form>
 
-        {/* Sign Up */}
+        {/* Register */}
         <div className="text-center text-sm mt-6">
           <span>atau</span>
           <div className="mt-2">
             <button
-              onClick={() => navigate("/signup")}
+              onClick={() => navigate("/register")}
               className="border border-white px-4 py-2 rounded hover:bg-white hover:text-black transition"
             >
-              Sign Up
+              Register
             </button>
           </div>
         </div>

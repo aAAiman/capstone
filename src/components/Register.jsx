@@ -7,9 +7,9 @@ import eyeOpenIcon from '../assets/eye-open.png';
 import eyeClosedIcon from '../assets/eye-closed.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import TermsModal from "../components/TermsModal";
+import TermsModal from "./TermsModal";
 
-export default function SignUp() {
+export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfPassword, setShowConfPassword] = useState(false);
   const [name, setName] = useState('');
@@ -33,7 +33,7 @@ export default function SignUp() {
         confpassword: confpassword,
         termsAccepted: true
       });
-      navigate('/signin');
+      navigate('/login');
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
@@ -45,9 +45,9 @@ export default function SignUp() {
     <div className="flex h-screen font-serif">
       {/* Kiri - Form */}
       <div className="w-full md:w-1/2 bg-black text-white flex flex-col justify-center px-6 md:px-12 py-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-6">Sign Up</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-6">Register</h1>
         <p className="mb-4 text-sm">
-          Already Have An Account? <Link to="/signin" className="text-blue-400">Back to Sign In</Link>
+          Already Have An Account? <Link to="/login" className="text-blue-400">Back to Log In</Link>
         </p>
         <p className="mb-4 text-sm">
          Back to home? <Link to="/" className="text-blue-400">Back to home</Link>
@@ -158,7 +158,7 @@ export default function SignUp() {
             </span>
           </div>
 
-          {/* Sign up button */}
+          {/* Register */}
           <button
             type="submit"
             className={`text-white p-2 rounded w-full transition ${isTermsAccepted
@@ -167,7 +167,7 @@ export default function SignUp() {
               }`}
             disabled={!isTermsAccepted}
           >
-            Sign up
+            Register
           </button>
         </form>
 

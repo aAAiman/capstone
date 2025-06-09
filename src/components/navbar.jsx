@@ -84,13 +84,13 @@ export default function Navbar() {
               ) : (
                 <div className="flex items-center space-x-4">
                   <Link 
-                    to="/signin" 
+                    to="/login" 
                     className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300"
                   >
-                    Login
+                    Log In
                   </Link>
                   <Link 
-                    to="/signup" 
+                    to="/register" 
                     className="border border-white/30 hover:border-white hover:bg-black  text-white px-4 py-2 text-sm font-light tracking-widest uppercase transition-all duration-300"
                   >
                     Register
@@ -170,14 +170,14 @@ export default function Navbar() {
                 ) : (
                   <div className="flex flex-col space-y-3">
                     <Link 
-                      to="/signin" 
+                      to="/login" 
                       onClick={() => setIsOpen(false)}
                       className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2"
                     >
-                      Login
+                      Log In
                     </Link>
                     <Link 
-                      to="/signup" 
+                      to="/register" 
                       onClick={() => setIsOpen(false)}
                       className="text-white/80 border border-white/30 hover:border-white hover:bg-black hover:text-white px-4 py-3 text-sm font-light tracking-widest uppercase transition-all duration-300 self-start"
                     >
