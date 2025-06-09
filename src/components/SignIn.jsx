@@ -63,7 +63,7 @@ export default function SignIn() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <img src={emailIcon} alt="Email Icon" className="w-6 h-6 pr-2" />
+              <img src={emailIcon} alt="Email Icon" className="w-7 h-7 ml-3 mr-2" />
             </div>
           </div>
 
