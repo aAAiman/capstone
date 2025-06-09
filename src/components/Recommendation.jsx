@@ -199,6 +199,8 @@ export default function Recommendation() {
           <option value="Jawa Barat">Jawa Barat</option>
           <option value="Jawa Tengah">Jawa Tengah</option>
           <option value="Jawa Timur">Jawa Timur</option>
+          <option value="Yogyakarta">Yogyakarta</option>
+          <option value="Banten">Banten</option>
         </select>
 
         {/* Fixed: Single MultiSelectDropdown component, not in map */}
