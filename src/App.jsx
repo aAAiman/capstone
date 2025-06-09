@@ -11,6 +11,7 @@ import setupAxiosInterceptors from './components/axiosConfig';
 import { AuthContext } from './components/AuthContext';
 import Wishlist from './components/wishlist';
 import Recommendation from './components/Recommendation';  
+import ScrollToTop from './components/ScrollToTop';
 
 
 function AppWrapper() {
@@ -28,6 +29,7 @@ function AppWrapper() {
   return (
     <div className="bg-black min-h-screen">
       {!hideNavFooter && <Navbar />}
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<Register />} />
