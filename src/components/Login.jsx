@@ -101,7 +101,7 @@ export default function Login() {
             type="submit"
             className="bg-red-600 text-white p-2 rounded w-full hover:bg-red-700 transition"
           >
-            Sign in
+            Log In
           </button>
         </form>
 
