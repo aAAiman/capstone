@@ -12,6 +12,7 @@ import { AuthContext } from './components/AuthContext';
 import Wishlist from './components/wishlist';
 import Recommendation from './components/Recommendation';  
 import ScrollToTop from './components/ScrollToTop';
+import NotFoundPage from './components/Notfoundpage';
 
 
 function AppWrapper() {
@@ -37,6 +38,7 @@ function AppWrapper() {
         <Route path="/places/:id" element={<DetailWisata />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/rekomendasi" element={<Recommendation />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       {!hideNavFooter && <Footer />}
     </div>
