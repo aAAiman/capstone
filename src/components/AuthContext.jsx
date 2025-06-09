@@ -8,7 +8,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// === Fix #2: automatically attach the access token & refresh on 401 ===
+
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('accessToken');
   if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -51,8 +51,8 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
-  // ------------ login / logout helpers -------------
-  const login = (token, userData) => { // Tambahkan parameter userData
+
+  const login = (token, userData) => { 
     localStorage.setItem('accessToken', token);
     if (userData) {
       localStorage.setItem('user', JSON.stringify(userData));
@@ -73,7 +73,6 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  // ------------ silent refresh on mount ------------
   useEffect(() => {
     const bootstrap = async () => {
       try {
@@ -94,7 +93,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, login, logout, api }} // Tambahkan user ke value
+      value={{ isAuthenticated, user, login, logout, api }} 
     >
       {children}
     </AuthContext.Provider>

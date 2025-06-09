@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Bookmark, BookmarkCheck, Star, CheckCircle, X } from 'lucide-react';
 import markerIcon from '../assets/marker.png';
 
-// Custom Alert Component
+
 const CustomAlert = ({ show, onClose, type = 'success', title, message }) => {
   useEffect(() => {
     if (show) {
@@ -72,6 +72,10 @@ const DetailWisata = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [id]);
+
+  useEffect(() => {
     const fetchPlace = async () => {
       try {
         const response = await axios.get(`https://capstone-be.revivaaiman.my.id/places/${id}`);
@@ -80,11 +84,11 @@ const DetailWisata = () => {
         const relatedResponse = await axios.get(`https://capstone-be.revivaaiman.my.id/places`, {
           params: {
             province: response.data.province,
-            notId: id, // Pastikan ini benar-benar "notId" tanpa karakter tambahan
-            description: encodeURIComponent(response.data.description || '') // Encode untuk keamanan
+            notId: id, 
+            description: encodeURIComponent(response.data.description || '') 
           }
         });
-        console.log('Related places response:', relatedResponse.data); // Log respons
+        console.log('Related places response:', relatedResponse.data);
         setRelatedPlaces(
           relatedResponse.data.map((place, index) => ({
             id: place.id || index,
@@ -110,7 +114,7 @@ const DetailWisata = () => {
         setLoading(false);
       } catch (err) {
         setError('Gagal memuat detail tempat wisata');
-        console.error('Error fetching place:', err.response ? err.response.data : err.message); // Log detail error
+        console.error('Error fetching place:', err.response ? err.response.data : err.message);
         setLoading(false);
       }
     };

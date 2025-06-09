@@ -4,7 +4,6 @@ import { ChevronDown, X, Check } from 'lucide-react';
 import markerIcon from '../assets/marker.png';
 import bgLandingPage from '../assets/bg-landing-page.png';
 
-// Komponen MultiSelectDropdown yang hilang
 const MultiSelectDropdown = ({
   categories,
   selectedLabels,
@@ -22,7 +21,7 @@ const MultiSelectDropdown = ({
     selectedLabels.forEach(label => onLabelChange(label));
   };
 
-  // Close dropdown when clicking outside
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -77,7 +76,6 @@ const MultiSelectDropdown = ({
       {/* Dropdown Menu */}
       {isOpen && (
         <div className="absolute top-full left-0 right-0 mt-1 bg-black border border-white/20 rounded shadow-lg z-10">
-          {/* Header with Clear All */}
           {selectedLabels.length > 0 && (
             <div className="px-4 py-2 border-b border-white/10">
               <button
@@ -251,7 +249,7 @@ export default function Recommendation() {
                     alt={place.name}
                     className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110"
                     onError={(e) => {
-                      e.target.src = 'https://source.unsplash.com/300x200/?travel'; // Fallback jika gambar gagal dimuat
+                      e.target.src = 'https://source.unsplash.com/300x200/?travel'; 
                     }}
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>

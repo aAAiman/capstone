@@ -17,8 +17,8 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [confpassword, setConfPassword] = useState('');
   const [msg, setMsg] = useState('');
-  const [isTermsAccepted, setIsTermsAccepted] = useState(false); // New state for checkbox
-  const [showTermsModal, setShowTermsModal] = useState(false); // State for modal visibility
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false); 
   const navigate = useNavigate();
 
   const Register = async (e) => {
