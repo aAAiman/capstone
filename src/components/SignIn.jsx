@@ -3,7 +3,7 @@ import bgLogin from "../assets/bg-login.png";
 import emailIcon from "../assets/email-icon.png";
 import eyeOpenIcon from "../assets/eye-open.png";
 import eyeClosedIcon from "../assets/eye-closed.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
 export default function SignIn() {
@@ -47,7 +47,9 @@ export default function SignIn() {
       {/* Kanan - Form */}
       <div className="w-full md:w-1/2 bg-black text-white flex flex-col justify-center px-6 md:px-12 py-8">
         <h1 className="text-3xl md:text-4xl font-bold mb-6">Sign in</h1>
-
+        <p className="mb-4 text-sm">
+          Back to Home? <Link to="/" className="text-blue-400">Back to Home</Link>
+        </p>
         {msg && <p className="text-red-500 mb-4">{msg}</p>}
 
         <form onSubmit={Auth} className="space-y-4">

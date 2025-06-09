@@ -49,6 +49,9 @@ export default function SignUp() {
         <p className="mb-4 text-sm">
           Already Have An Account? <Link to="/signin" className="text-blue-400">Back to Sign In</Link>
         </p>
+        <p className="mb-4 text-sm">
+         Back to home? <Link to="/" className="text-blue-400">Back to home</Link>
+        </p>
         <p className="mb-4 text-red-500">{msg}</p>
 
         {/* Bungkus input dan tombol dalam <form> */}
@@ -101,7 +104,7 @@ export default function SignUp() {
                 aria-label="Toggle Password Visibility"
               >
                 <img
-                  src={showPassword ? eyeClosedIcon : eyeOpenIcon}
+                  src={showPassword ? eyeOpenIcon : eyeClosedIcon}
                   alt="Toggle Password"
                   className="w-7 h-7"
                 />
@@ -127,7 +130,7 @@ export default function SignUp() {
                 aria-label="Toggle Password Visibility"
               >
                 <img
-                  src={showConfPassword ? eyeClosedIcon : eyeOpenIcon}
+                  src={showConfPassword ? eyeOpenIcon : eyeClosedIcon}
                   alt="Toggle Password"
                   className="w-7 h-7"
                 />
