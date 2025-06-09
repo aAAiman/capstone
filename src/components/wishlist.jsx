@@ -19,18 +19,20 @@ export default function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const apiBEUrl = import.meta.env.VITE_BE_API
+
 
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const token = localStorage.getItem('accessToken'); 
+        const token = localStorage.getItem('accessToken');
         if (!token) {
           setError('Please log in to view your wishlist');
           setLoading(false);
           return;
         }
 
-        const response = await fetch('https://capstone-be.revivaaiman.my.id/wishlist', {
+        const response = await fetch(`${apiBEUrl}/wishlist`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

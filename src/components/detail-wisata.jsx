@@ -5,6 +5,8 @@ import { Bookmark, BookmarkCheck, Star, CheckCircle, X } from 'lucide-react';
 import markerIcon from '../assets/marker.png';
 
 
+const apiBEUrl = import.meta.env.VITE_BE_API
+
 const CustomAlert = ({ show, onClose, type = 'success', title, message }) => {
   useEffect(() => {
     if (show) {
@@ -78,14 +80,14 @@ const DetailWisata = () => {
   useEffect(() => {
     const fetchPlace = async () => {
       try {
-        const response = await axios.get(`https://capstone-be.revivaaiman.my.id/places/${id}`);
+        const response = await axios.get(`${apiBEUrl}/places/${id}`);
         setPlace(response.data);
 
-        const relatedResponse = await axios.get(`https://capstone-be.revivaaiman.my.id/places`, {
+        const relatedResponse = await axios.get(`${apiBEUrl}/places`, {
           params: {
             province: response.data.province,
-            notId: id, 
-            description: encodeURIComponent(response.data.description || '') 
+            notId: id,
+            description: encodeURIComponent(response.data.description || '')
           }
         });
         console.log('Related places response:', relatedResponse.data);
@@ -103,7 +105,7 @@ const DetailWisata = () => {
 
         const token = localStorage.getItem('accessToken');
         if (token) {
-          const wishlistResponse = await axios.get('https://capstone-be.revivaaiman.my.id/wishlist', {
+          const wishlistResponse = await axios.get(`${apiBEUrl}/wishlist`, {
             headers: { Authorization: `Bearer ${token}` },
           });
 
@@ -131,14 +133,14 @@ const DetailWisata = () => {
 
     try {
       if (isBookmarked) {
-        await axios.delete(`https://capstone-be.revivaaiman.my.id/wishlist/${place.id}`, {
+        await axios.delete(`${apiBEUrl}/wishlist/${place.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setIsBookmarked(false);
         showAlert('warning', 'Wishlist Dihapus', 'Tempat wisata berhasil dihapus dari wishlist.');
       } else {
         await axios.post(
-          'https://capstone-be.revivaaiman.my.id/wishlist',
+          `${apiBEUrl}/wishlist`,
           { placeId: place.id },
           {
             headers: { Authorization: `Bearer ${token}` },

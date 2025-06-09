@@ -18,13 +18,15 @@ export default function SignUp() {
   const [confpassword, setConfPassword] = useState('');
   const [msg, setMsg] = useState('');
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
-  const [showTermsModal, setShowTermsModal] = useState(false); 
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const apiBEUrl = import.meta.env.VITE_BE_API
+
   const navigate = useNavigate();
 
   const Register = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://capstone-be.revivaaiman.my.id/register', {
+      await axios.post(`${apiBEUrl}/register`, {
         name: name,
         email: email,
         password: password,
@@ -156,11 +158,10 @@ export default function SignUp() {
           {/* Sign up button */}
           <button
             type="submit"
-            className={`text-white p-2 rounded w-full transition ${
-              isTermsAccepted
+            className={`text-white p-2 rounded w-full transition ${isTermsAccepted
                 ? 'bg-red-600 text-white hover:bg-red-700'
                 : 'bg-gray-600 text-gray-300 cursor-not-allowed'
-            }`}
+              }`}
             disabled={!isTermsAccepted}
           >
             Sign up

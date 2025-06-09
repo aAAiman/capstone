@@ -114,7 +114,9 @@ export default function Recommendation() {
   const [description, setDescription] = useState('');
   const [province, setProvince] = useState('');
   const [selectedLabels, setSelectedLabels] = useState([]);
-  const categories = ['Alam', 'Budaya', 'Sejarah', 'Religi', 'Edukasi'];
+  const apiMLUrl = import.meta.env.VITE_ML_API
+
+  const categories = ['Alam', 'Budaya', 'Buatan', 'Religi', 'Edukasi'];
 
   const handleLabelChange = (category) => {
     setSelectedLabels((prev) =>
@@ -127,7 +129,7 @@ export default function Recommendation() {
   const handleSearch = async () => {
     try {
       setLoading(true);
-      const response = await fetch('https://capstone-cc25-cf102.revivaaiman.my.id/recommend', {
+      const response = await fetch(`${apiMLUrl}/recommend`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -251,7 +253,7 @@ export default function Recommendation() {
                     alt={place.name}
                     className="w-full h-64 object-cover transition-all duration-700 group-hover:scale-110"
                     onError={(e) => {
-                      e.target.src = 'https://source.unsplash.com/300x200/?travel'; 
+                      e.target.src = 'https://source.unsplash.com/300x200/?travel';
                     }}
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>

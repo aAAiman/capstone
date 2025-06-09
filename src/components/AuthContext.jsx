@@ -3,8 +3,9 @@ import axios from 'axios';
 
 export const AuthContext = createContext();
 
+const apiBEUrl = import.meta.env.VITE_BE_API
 const api = axios.create({
-  baseURL: 'https://capstone-be.revivaaiman.my.id',
+  baseURL: `${apiBEUrl}`,
   withCredentials: true,
 });
 

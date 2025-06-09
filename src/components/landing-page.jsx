@@ -5,6 +5,7 @@ import bgLandingPage from '../assets/bg-landing-page.png';
 import markerIcon from '../assets/marker.png';
 
 export default function LandingPage() {
+  const apiBEUrl = import.meta.env.VITE_BE_API
   const [topPlaces, setTopPlaces] = useState([]);
   const [beachPlaces, setBeachPlaces] = useState([]);
   const [mountainPlaces, setMountainPlaces] = useState([]);
@@ -24,7 +25,7 @@ export default function LandingPage() {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const response = await axios.get('https://capstone-be.revivaaiman.my.id/places');
+        const response = await axios.get(`${apiBEUrl}/places`);
         const allPlaces = response.data;
 
         setTopPlaces(allPlaces.slice(0, 6));
