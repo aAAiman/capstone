@@ -29,6 +29,9 @@ This is the **frontend** project for the Capstone application *JelajahJawa.ID*. 
    npm install
 
 3. **Create a .env file (if needed) and configure any required environment variables such as the backend API URL.**
+   ```bash
+   VITE_BE_API=your_Backend_API
+   VITE_ML_API=your_ML_API
 
 4. **Run the development server**
    ```bash
