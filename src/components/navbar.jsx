@@ -24,11 +24,11 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-      isScrolled 
-        ? 'bg-black/95 backdrop-blur-sm border-b border-white/10' 
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled || isOpen
+        ? 'bg-black/95 backdrop-blur-sm border-b border-white/10'
         : 'bg-transparent'
-    }`}>
+      }`}>
+
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
           {/* Logo/Brand */}
@@ -41,22 +41,22 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-12">
             <div className="flex space-x-8">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 relative group"
               >
                 Home
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link 
-                to="/rekomendasi" 
+              <Link
+                to="/rekomendasi"
                 className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 relative group"
               >
                 Rekomendasi
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link 
-                to="/wishlist" 
+              <Link
+                to="/wishlist"
                 className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 relative group"
               >
                 wishlist
@@ -74,8 +74,8 @@ export default function Navbar() {
                   <span className="text-white/80 text-sm font-light tracking-wide">
                     Welcome, <span className="text-white font-normal">{user?.name || 'User'}</span>
                   </span>
-                  <button 
-                    onClick={handleLogout} 
+                  <button
+                    onClick={handleLogout}
                     className="border border-white/30 hover:border-white hover:bg-black  text-white px-4 py-2 text-sm font-light tracking-widest uppercase transition-all duration-300"
                   >
                     Logout
@@ -83,14 +83,14 @@ export default function Navbar() {
                 </div>
               ) : (
                 <div className="flex items-center space-x-4">
-                  <Link 
-                    to="/login" 
+                  <Link
+                    to="/login"
                     className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300"
                   >
                     Log In
                   </Link>
-                  <Link 
-                    to="/register" 
+                  <Link
+                    to="/register"
                     className="border border-white/30 hover:border-white hover:bg-black  text-white px-4 py-2 text-sm font-light tracking-widest uppercase transition-all duration-300"
                   >
                     Register
@@ -106,43 +106,39 @@ export default function Navbar() {
             className="md:hidden text-white p-2 hover:bg-white/10 transition-colors duration-300 rounded-sm"
           >
             <div className="relative w-6 h-6">
-              <span className={`absolute top-0 left-0 w-full h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? 'rotate-45 top-2.5' : ''
-              }`}></span>
-              <span className={`absolute top-2.5 left-0 w-full h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? 'opacity-0' : ''
-              }`}></span>
-              <span className={`absolute top-5 left-0 w-full h-0.5 bg-white transition-all duration-300 ${
-                isOpen ? '-rotate-45 top-2.5' : ''
-              }`}></span>
+              <span className={`absolute top-0 left-0 w-full h-0.5 bg-white transition-all duration-300 ${isOpen ? 'rotate-45 top-2.5' : ''
+                }`}></span>
+              <span className={`absolute top-2.5 left-0 w-full h-0.5 bg-white transition-all duration-300 ${isOpen ? 'opacity-0' : ''
+                }`}></span>
+              <span className={`absolute top-5 left-0 w-full h-0.5 bg-white transition-all duration-300 ${isOpen ? '-rotate-45 top-2.5' : ''
+                }`}></span>
             </div>
           </button>
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden overflow-hidden transition-all duration-500 ${
-          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
+        <div className={`md:hidden overflow-hidden transition-all duration-500 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}>
           <div className="pt-6 pb-4 border-t border-white/10 mt-4">
             <div className="flex flex-col space-y-6">
               {/* Mobile Navigation Links */}
               <div className="flex flex-col space-y-4">
-                <Link 
-                  to="/" 
+                <Link
+                  to="/"
                   onClick={() => setIsOpen(false)}
                   className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2 border-b border-transparent hover:border-white/20"
                 >
                   Home
                 </Link>
-                <Link 
-                  to="/rekomendasi" 
+                <Link
+                  to="/rekomendasi"
                   onClick={() => setIsOpen(false)}
                   className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2 border-b border-transparent hover:border-white/20"
                 >
                   Rekomendasi
                 </Link>
-                <Link 
-                  to="/wishlist" 
+                <Link
+                  to="/wishlist"
                   onClick={() => setIsOpen(false)}
                   className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2 border-b border-transparent hover:border-white/20"
                 >
@@ -160,8 +156,8 @@ export default function Navbar() {
                     <span className="text-white/80 text-sm font-light tracking-wide">
                       Welcome, <span className="text-white font-normal">{user?.name || 'User'}</span>
                     </span>
-                    <button 
-                      onClick={handleLogout} 
+                    <button
+                      onClick={handleLogout}
                       className=" text-white/80 border border-white/30 hover:border-white hover:bg-black hover:text-white px-4 py-3 text-sm font-light tracking-widest uppercase transition-all duration-300 self-start"
                     >
                       Logout
@@ -169,15 +165,15 @@ export default function Navbar() {
                   </>
                 ) : (
                   <div className="flex flex-col space-y-3">
-                    <Link 
-                      to="/login" 
+                    <Link
+                      to="/login"
                       onClick={() => setIsOpen(false)}
                       className="text-white/80 hover:text-white text-sm font-light tracking-widest uppercase transition-all duration-300 py-2"
                     >
                       Log In
                     </Link>
-                    <Link 
-                      to="/register" 
+                    <Link
+                      to="/register"
                       onClick={() => setIsOpen(false)}
                       className="text-white/80 border border-white/30 hover:border-white hover:bg-black hover:text-white px-4 py-3 text-sm font-light tracking-widest uppercase transition-all duration-300 self-start"
                     >
