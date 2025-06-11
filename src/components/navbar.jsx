@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { AuthContext } from './AuthContext';
+import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,8 +26,8 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled || isOpen
-        ? 'bg-black/95 backdrop-blur-sm border-b border-white/10'
-        : 'bg-transparent'
+      ? 'bg-black/95 backdrop-blur-sm border-b border-white/10'
+      : 'bg-transparent'
       }`}>
 
       <div className="max-w-7xl mx-auto px-6 py-4">
@@ -34,7 +35,13 @@ export default function Navbar() {
           {/* Logo/Brand */}
           <div className="flex items-center">
             <Link to="/" className="text-white text-2xl font-light tracking-wider hover:opacity-70 transition-opacity duration-300">
-              JelajahJawa<span className="text-white/60">.ID</span>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              >
+                JelajahJawa<span className="text-white/60">.ID</span>
+              </motion.div>
             </Link>
           </div>
 
