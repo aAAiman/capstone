@@ -90,7 +90,6 @@ const DetailWisata = () => {
             description: encodeURIComponent(response.data.description || '')
           }
         });
-        console.log('Related places response:', relatedResponse.data);
         setRelatedPlaces(
           relatedResponse.data.map((place, index) => ({
             id: place.id || index,
