@@ -21,7 +21,6 @@ export default function Login() {
         email: email,
         password: password,
       });
-      console.log("Login response:", response.data);
       login(response.data.accessToken, response.data.user);
       navigate("/");
     } catch (error) {

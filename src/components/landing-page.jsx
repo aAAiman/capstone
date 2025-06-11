@@ -258,23 +258,6 @@ export default function LandingPage() {
           <div className="w-16 h-px bg-white/20"></div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in-up {
-          animation: fade-in-up 1.2s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 }
