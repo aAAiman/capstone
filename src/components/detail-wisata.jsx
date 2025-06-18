@@ -104,12 +104,33 @@ const DetailWisata = () => {
 
         const token = localStorage.getItem('accessToken');
         if (token) {
-          const wishlistResponse = await axios.get(`${apiBEUrl}/wishlist`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-
-          const isSaved = wishlistResponse.data.some((item) => item.id === response.data.id);
-          setIsBookmarked(isSaved);
+          try {
+            const wishlistResponse = await axios.get(`${apiBEUrl}/wishlist`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log('Respons Wishlist:', wishlistResponse.data); 
+            if (Array.isArray(wishlistResponse.data)) {
+              const isSaved = wishlistResponse.data.some((item) => item.id === response.data.id);
+              setIsBookmarked(isSaved);
+            } else {
+              console.warn('Respons wishlist bukan array:', wishlistResponse.data);
+              setIsBookmarked(false); 
+              showAlert('warning', 'Peringatan', 'Data wishlist tidak valid.');
+            }
+          } catch (wishlistError) {
+            console.error('Error mengambil wishlist:', wishlistError.response?.data || wishlistError.message);
+            if (wishlistError.response?.status === 403) {
+              showAlert('warning', 'Akses Ditolak', 'Kamu tidak memiliki izin untuk mengakses wishlist.');
+              setIsBookmarked(false);
+            } else if (wishlistError.response?.status === 401) {
+              showAlert('warning', 'Sesi Kadaluarsa', 'Silakan login kembali.');
+              localStorage.removeItem('accessToken');
+              window.location.href = '/login';
+            }
+          }
+        } else {
+          console.log('Tidak ada token, lewati pengambilan wishlist');
+          setIsBookmarked(false);
         }
 
         setLoading(false);
