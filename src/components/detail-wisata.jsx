@@ -87,7 +87,7 @@ const DetailWisata = () => {
           params: {
             province: response.data.province,
             notId: id,
-            description: encodeURIComponent(response.data.description || '')
+            description: decodeURIComponent(description)
           }
         });
         setRelatedPlaces(
