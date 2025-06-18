@@ -129,7 +129,6 @@ const DetailWisata = () => {
             }
           }
         } else {
-          console.log('Tidak ada token, lewati pengambilan wishlist');
           setIsBookmarked(false);
         }
 
